@@ -1,0 +1,27 @@
+対象ユーザー,機能分類,機能名,Controller ,Model,View 
+市民,トップページ,静的ページ表示,static_pages_controller.rb,-,static_pages/top.html.erb
+,アカウント,新規登録,users_controller.rb,user.rb,users/new.html.erb
+,,ログイン,sessions_controller.rb,user.rb,sessions/new.html.erb
+,,ログアウト,sessions_controller.rb,-,-
+,移動希望,一覧表示,"requested_routes_controller.rb
+
+","requested_route.rb
+requested_time.rb",requests/index.html.erb
+,,新規登録,"requested_routes_controller.rb
+
+","requested_route.rb
+requested_time.rb",requests/new.html.erb
+,,登録情報表示,"requested_routes_controller.rb
+
+","requested_route.rb
+requested_time.rb",requests/show.html.erb
+,,登録情報編集,"requested_routes_controller.rb
+
+","requested_route.rb
+requested_time.rb",requests/edit.html.erb
+,,,,,
+管理者,アカウント,ログイン,admin/sessions_controller.rb,admin_user.rb,admin/sessions/new.html.erb
+,,ログアウト,admin/sessions_controller.rb,-,-
+,ダッシュボード,トップページ,admin/dashboards_controller.rb,-,admin/dashboards/top.html.erb
+,,交通需要マップ表示,admin/dashboards_controller.rb,"requested_route.rb
+requested_time.rb",admin/dashboards/_heatmap.html.erb
