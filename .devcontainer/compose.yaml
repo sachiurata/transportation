@@ -19,9 +19,31 @@ services:
     # (Adding the "ports" property to this file will not forward from a Codespace.)
     depends_on:
     - selenium
+    - db
+
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: vscode
+      POSTGRES_PASSWORD: password
+      POSTGRES_NAME: transportation_development
+
 
   selenium:
     image: selenium/standalone-chromium
     restart: unless-stopped
 
-  
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: vscode
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: transportation_development
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # 開発用にローカルからもアクセス可能にする
+
+volumes:
+  db-data:
