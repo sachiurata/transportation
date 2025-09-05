@@ -7,6 +7,7 @@ erDiagram
         int id PK "NOT NULL"
         string email "NOT NULL"
         string password_digest "NOT NULL"
+        integer role
         datetime created_at
         datetime updated_at
     }
@@ -33,7 +34,7 @@ erDiagram
     REQUESTED_TIMES {
        int id PK "NOT NULL"
        int requested_route_id FK "NOT NULL"
-       string requested_days "NOT NULL 曜日"
+       string requested_day "NOT NULL 曜日"
        time requested_time "NOT NULL 希望時間帯"
        datetime created_at
        datetime updated_at
