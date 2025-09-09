@@ -3,9 +3,7 @@
 one:
   email: MyString
   password_digest: MyString
-  role: 1
 
 two:
   email: MyString
   password_digest: MyString
-  role: 1
