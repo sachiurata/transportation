@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: postgis/postgis:17-3.4
+    image: postgis/postgis:15-3.4 
     restart: unless-stopped
     environment:
       POSTGRES_HOST: db
