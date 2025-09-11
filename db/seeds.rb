@@ -35,8 +35,8 @@ if Rails.env.development?
   factory = RGeo::Geographic.spherical_factory(srid: 4326)
 
   # --- ユーザー1のデータ ---
-  requested_route1 = RequestedRoute.find_or_create_by!(user: user1, start_point_name: '佐沼高校') do |route|
-    route.start_point_location = factory.point(141.20436169239665, 38.69134368373125)
+  requested_route1 = RequestedRoute.find_or_create_by!(user: user1, start_point_name: '登米総合産業高等学校') do |route|
+    route.start_point_location = factory.point(141.24968613323543, 38.71912096595813)
     route.end_point_name = '自宅'
     route.end_point_location = factory.point(141.36511885576596, 38.7566679680149)
     route.purpose = '通学'
@@ -57,11 +57,11 @@ if Rails.env.development?
   )
 
   # --- ユーザー2のデータ ---
-  requested_route2 = RequestedRoute.find_or_create_by!(user: user2, start_point_name: '佐沼高校') do |route|
+  requested_route2 = RequestedRoute.find_or_create_by!(user: user2, start_point_name: '佐沼高等学校') do |route|
     route.start_point_location = factory.point(141.20436169239665, 38.69134368373125)
     route.end_point_name = '自宅'
     route.end_point_location = factory.point(141.2500, 38.7000)
-    route.purpose = '通勤'
+    route.purpose = '通学'
     route.comment = '夏休みの部活の時はバスで帰れません。'
     route.is_existing_service_available = false
   end
