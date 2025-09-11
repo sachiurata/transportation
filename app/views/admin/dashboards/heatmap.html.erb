@@ -1,2 +1,84 @@
-<h1>Admin::Dashboards#heatmap</h1>
-<p>Find me in app/views/admin/dashboards/heatmap.html.erb</p>
+<h1>ルートの表示</h1>
+
+<div id="map" style="height: 750px; width: 100%;"></div>
+
+<%= javascript_include_tag "icons.js" %>
+
+<script>
+  function initMap() {
+    const icons = getSharedMapIcons();
+    const directionsService = new google.maps.DirectionsService();
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 10,
+    });
+
+    const routesData = <%= @routes_data %>;
+    // 全てのマーカーとルートが収まるように、地図の表示範囲を計算するためのオブジェクト
+    const bounds = new google.maps.LatLngBounds();
+
+    // 各ルートを順番に、少し遅延させて処理する関数
+    function processRoutes(index) {
+      // 全てのルート処理が終わったら地図の表示範囲を調整して終了
+      if (index >= routesData.length) {
+        map.fitBounds(bounds);
+        return;
+      }
+
+      const route = routesData[index];
+      const startPoint = new google.maps.LatLng(route.start_lat, route.start_lng);
+      const endPoint = new google.maps.LatLng(route.end_lat, route.end_lng);
+
+      // 地図の表示範囲(bounds)に出発地と目的地を追加
+      bounds.extend(startPoint);
+      bounds.extend(endPoint);
+
+      // 出発地のマーカー
+      new google.maps.Marker({
+        position: startPoint,
+        map: map,
+        icon: icons.start,
+        title: `出発地 ${index + 1}`,
+      });
+
+      // 目的地のマーカー
+      new google.maps.Marker({
+        position: endPoint,
+        map: map,
+        icon: icons.end,
+        title: `目的地 ${index + 1}`,
+      });
+
+      // API制限を避けるため、少し待ってからリクエストを送信
+      setTimeout(() => {
+        const directionsRenderer = new google.maps.DirectionsRenderer({
+          map: map,
+          suppressMarkers: true, // マーカーは自前で設置するので非表示
+          preserveViewport: true, // 地図の表示範囲を維持
+        });
+
+        directionsService.route({
+          origin: startPoint,
+          destination: endPoint,
+          travelMode: google.maps.TravelMode.DRIVING,
+        })
+        .then((response) => {
+          directionsRenderer.setDirections(response);
+        })
+        .catch((e) => {
+          console.error(`ルート ${index + 1} の取得に失敗しました:`, e);
+        });
+
+        // 次のルートを処理
+        processRoutes(index + 1);
+      }, 300); // 遅延時間
+    }
+
+    // 最初のルートから処理を開始
+    processRoutes(0);
+  }
+</script>
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap&libraries=routes"
+  async
+></script>
