@@ -1,12 +1,29 @@
 <h1>ルートの表示</h1>
 
-<div id="map" style="height: 750px; width: 100%;"></div>
+<div id="map" style="height: 600px; width: 100%;"></div>
+<div id="legend" style="padding: 10px; display: flex; align-items: center; gap: 20px; border-top: 1px solid #ccc; margin-top: 5px;">
+  
+  <%# 出発地の凡例 %>
+  <div style="display: flex; align-items: center;">
+    <%= image_tag 'start_marker.svg', width: 16, height: 16 %>
+    <span>出発地</span>
+  </div>
+
+  <%# 目的地の凡例 %>
+  <div style="display: flex; align-items: center;">
+    <%= image_tag 'end_marker.svg', width: 16, height: 16 %>
+    <span>目的地</span>
+  </div>
+</div>
 
 <%= javascript_include_tag "icons.js" %>
 
 <script>
   function initMap() {
-    const icons = getSharedMapIcons();
+    const icons = getSharedMapIcons(
+      "<%= asset_path('start_marker.svg') %>",
+      "<%= asset_path('end_marker.svg') %>"
+    );
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 10,

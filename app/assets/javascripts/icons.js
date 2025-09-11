@@ -1,23 +1,16 @@
-function getSharedMapIcons() {
+// アイコンのURLを引数で受け取るように変更
+function getSharedMapIcons(startIconUrl, endIconUrl) {
     return {
-         // 出発地マーカー
+        // 出発地マーカー
         start: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: '#FF0000', 
-            fillOpacity: 1,
-            strokeWeight: 1,
-            strokeColor: '#333',
-            scale: 6,
+            url: startIconUrl, // 引数で渡されたURLを使用
+            scaledSize: new google.maps.Size(24, 24),
         },
 
         // 目的地マーカー
         end: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: '#008000', 
-            fillOpacity: 1,
-            strokeWeight: 1,
-            strokeColor: '#333',
-            scale: 6,
+            url: endIconUrl, // 引数で渡されたURLを使用
+            scaledSize: new google.maps.Size(24, 24),
         }
     }
 }
