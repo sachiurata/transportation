@@ -52,7 +52,7 @@
               <label class="form-check-label" for="checkFriday">金曜日</label>
             </div>
           </div>
-         
+
           <div class="col-md-6">
             <div class="form-check" data-action="change->map#filter">
               <input class="form-check-input" type="checkbox" value="土曜日" id="checkSaturday" checked>
@@ -66,6 +66,64 @@
         </div>
       </div>
 
+      <div class="mb-3">
+        <h5>時間帯</h5>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+          <label class="form-check-label" for="flexRadioDefault1">
+            出発時間
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+            到着時間
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div id="time-range-detailed" class="row g-3 align-items-center">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-text">開始</span>
+              <select class="form-select" aria-label="開始時間（時）">
+                <% (0..23).each do |hour| %>
+                  <option value="<%= hour %>"><%= format('%02d', hour) %></option>
+                <% end %>
+              </select>
+              <span class="input-group-text">:</span>
+              <select class="form-select" aria-label="開始時間（分）">
+                <% [0, 15, 30, 45].each do |min| %>
+                  <option value="<%= min %>"><%= format('%02d', min) %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-text">終了</span>
+              <select class="form-select" aria-label="終了時間（時）">
+                <% (0..23).each do |hour| %>
+                  <option value="<%= hour %>"><%= format('%02d', hour) %></option>
+                <% end %>
+              </select>
+              <span class="input-group-text">:</span>
+              <select class="form-select" aria-label="終了時間（分）">
+                <% [0, 15, 30, 45].each do |min| %>
+                  <option value="<%= min %>"><%= format('%02d', min) %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="mb-3">
+        
+      </div>
 
       <select class="form-select" data-action="change->map#filter">
         <option value="all" selected>全ての出発地</option>
