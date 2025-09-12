@@ -17,6 +17,6 @@ class Admin::DashboardsController < Admin::BaseController
         end_lat: route.end_point_location.y,
         end_lng: route.end_point_location.x
       }
-    end.to_json.html_safe
+    end
   end
 end
