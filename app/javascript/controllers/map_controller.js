@@ -10,7 +10,9 @@ export default class extends Controller {
   }
 
   connect() {
-    // connect時には、APIを読み込む関数を呼び出すだけにします
+    // ルート描画オブジェクトを保存する配列を初期化する
+    this.routeElements = []
+    // APIを読み込む関数を呼び出す
     this.loadGoogleMapsAPI()
   }
 
@@ -36,11 +38,9 @@ export default class extends Controller {
   initMap() {
     // 地図の表示範囲を自動調整するためのオブジェクト
     const bounds = new google.maps.LatLngBounds()
-
-    // 地図を初期化
-    // this.mapTarget は data-map-target="map" で指定したdiv要素を指します
-    const map = new google.maps.Map(this.mapTarget, {
-      mapId: "YOUR_MAP_ID", // 必要に応じてご自身のMap IDを設定してください
+    // 他のメソッドからmapオブジェクトを参照できるように、this.mapに格納する
+    this.map = new google.maps.Map(this.mapTarget, {
+      mapId: "YOUR_MAP_ID",
       disableDefaultUI: true,
     })
 
@@ -62,8 +62,8 @@ export default class extends Controller {
       const endPoint = new google.maps.LatLng(routeData.end_lat, routeData.end_lng)
 
       // マーカーを作成
-      new google.maps.Marker({ position: startPoint, map: map, icon: startIcon })
-      new google.maps.Marker({ position: endPoint, map: map, icon: endIcon })
+      const startMarker = new google.maps.Marker({ position: startPoint, map: this.map, icon: startIcon })
+      const endMarker = new google.maps.Marker({ position: endPoint, map: this.map, icon: endIcon })
 
       // ルート検索のリクエストを作成
       const request = {
@@ -76,14 +76,18 @@ export default class extends Controller {
       directionsService.route(request, (result, status) => {
         if (status == google.maps.DirectionsStatus.OK) {
           const directionsRenderer = new google.maps.DirectionsRenderer({
-            map: map,
+            map: this.map,
             directions: result,
-            suppressMarkers: true, // 自前のマーカーを使うので、デフォルトマーカーは非表示
-            polylineOptions: {
-              strokeColor: "#007bff", // 線の色
-              strokeOpacity: 0.8,   // 線の不透明度
-              strokeWeight: 5,      // 線の太さ
-            },
+            suppressMarkers: true,
+            polylineOptions: { strokeColor: "#007bff", strokeOpacity: 0.8, strokeWeight: 5 },
+          })
+
+          // 描画した要素を出発地名とセットで保存
+          this.routeElements.push({
+            start_point_name: routeData.start_point_name,
+            renderer: directionsRenderer,
+            startMarker: startMarker,
+            endMarker: endMarker
           })
         } else {
           console.error("Directions request failed due to " + status)
@@ -95,7 +99,34 @@ export default class extends Controller {
       bounds.extend(endPoint)
     })
 
-    // 全てのルートが収まるように地図の表示範囲を調整
-    map.fitBounds(bounds)
+    // すべてのルートが描画されるように地図の表示範囲を調整
+    this.map.fitBounds(bounds)
+  }
+
+  // プルダウン変更時に呼び出されるfilterメソッドを追加
+  filter(event) {
+    const selectedName = event.target.value
+    const bounds = new google.maps.LatLngBounds()
+
+    this.routeElements.forEach(element => {
+      // 条件選択に基づいて表示・非表示を決定
+      const isVisible = (selectedName === 'all' || element.start_point_name === selectedName)
+
+      // 表示・非表示を切り替えます
+      element.renderer.setMap(isVisible ? this.map : null)
+      element.startMarker.setMap(isVisible ? this.map : null)
+      element.endMarker.setMap(isVisible ? this.map : null)
+
+      // 表示対象のマーカーだけを地図の表示範囲に含める
+      if (isVisible) {
+        bounds.extend(element.startMarker.getPosition())
+        bounds.extend(element.endMarker.getPosition())
+      }
+    })
+
+    // 表示するルートが1つ以上ある場合のみ、地図の範囲を調整する
+    if (!bounds.isEmpty()) {
+      this.map.fitBounds(bounds)
+    }
   }
 }
