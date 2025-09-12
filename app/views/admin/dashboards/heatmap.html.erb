@@ -122,16 +122,37 @@
       </div>
 
       <div class="mb-3">
-        
-      </div>
+        <h5>出発地/目的地</h5>
+        <div class="row align-items-center mb-2">
+          <div class="col-auto">
+            <label for="start-location-select" class="col-form-label">出発地</label>
+          </div>
+          <div class="col">
+            <select id="start-location-select" class="form-select" data-action="change->map#filter">
+              <option value="all" selected>全ての出発地</option>
+              <option value="佐沼高等学校">佐沼高等学校</option>
+              <option value="登米総合産業高等学校">登米総合産業高等学校</option>
+              <option value="登米高等学校">登米高等学校</option>
+              <option value="飛鳥未来きずな高等学校">飛鳥未来きずな高等学校</option>
+            </select>
+          </div>
+        </div>
 
-      <select class="form-select" data-action="change->map#filter">
-        <option value="all" selected>全ての出発地</option>
-        <option value="佐沼高等学校">佐沼高等学校</option>
-        <option value="登米総合産業高等学校">登米総合産業高等学校</option>
-        <option value="登米高等学校">登米高等学校</option>
-        <option value="飛鳥未来きずな高等学校">飛鳥未来きずな高等学校</option>
-      </select>
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <label for="end-location-select" class="col-form-label">目的地</label>
+          </div>
+          <div class="col">
+            <select id="end-location-select" class="form-select" data-action="change->map#filter">
+              <option value="all" selected>全ての目的地</option>
+              <option value="佐沼高等学校">佐沼高等学校</option>
+              <option value="登米総合産業高等学校">登米総合産業高等学校</option>
+              <option value="登米高等学校">登米高等学校</option>
+              <option value="飛鳥未来きずな高等学校">飛鳥未来きずな高等学校</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
