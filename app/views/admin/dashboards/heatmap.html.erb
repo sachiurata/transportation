@@ -25,40 +25,40 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4" data-action="change->map#filter">
       <h4>条件選択</h4>
       <div class="mb-3">
         <h5>曜日</h5>
         <div class="row">
           <div class="col-md-6">
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="月曜日" id="checkMonday" checked>
               <label class="form-check-label" for="checkMonday">月曜日</label>
             </div>
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="火曜日" id="checkTuesday" checked>
               <label class="form-check-label" for="checkTuesday">火曜日</label>
             </div>
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="水曜日" id="checkWednesday" checked>
               <label class="form-check-label" for="checkWednesday">水曜日</label>
             </div>
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="木曜日" id="checkThursday" checked>
               <label class="form-check-label" for="checkThursday">木曜日</label>
             </div>
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="金曜日" id="checkFriday" checked>
               <label class="form-check-label" for="checkFriday">金曜日</label>
             </div>
           </div>
 
           <div class="col-md-6">
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="土曜日" id="checkSaturday" checked>
               <label class="form-check-label" for="checkSaturday">土曜日</label>
             </div>
-            <div class="form-check" data-action="change->map#filter">
+            <div class="form-check">
               <input class="form-check-input" type="checkbox" value="日曜日" id="checkSunday" checked>
               <label class="form-check-label" for="checkSunday">日曜日</label>
             </div>
@@ -128,7 +128,7 @@
             <label for="start-location-select" class="col-form-label">出発地</label>
           </div>
           <div class="col">
-            <select id="start-location-select" class="form-select" data-action="change->map#filter">
+            <select id="start-location-select" class="form-select">
               <option value="all" selected>全ての出発地</option>
               <option value="佐沼高等学校">佐沼高等学校</option>
               <option value="登米総合産業高等学校">登米総合産業高等学校</option>
@@ -143,7 +143,7 @@
             <label for="end-location-select" class="col-form-label">目的地</label>
           </div>
           <div class="col">
-            <select id="end-location-select" class="form-select" data-action="change->map#filter">
+            <select id="end-location-select" class="form-select">
               <option value="all" selected>全ての目的地</option>
               <option value="佐沼高等学校">佐沼高等学校</option>
               <option value="登米総合産業高等学校">登米総合産業高等学校</option>
