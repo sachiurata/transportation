@@ -1,2 +1,140 @@
-<h1>RequestedRoutes#new</h1>
-<p>Find me in app/views/requested_routes/new.html.erb</p>
+<div class="container mt-4" data-controller="form-wizard" data-form-wizard-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>">
+  <%= form_with model: @requested_route, url: requested_routes_path, method: :post do |f| %>
+
+    <%# --- ステップ1: 出発地 --- %>
+    <div data-form-wizard-target="step">
+      <h4>出発地を選択してください</h4>
+
+      <div class="mb-3">
+        <%= f.label :start_point_name, "出発地の名称", class: "form-label" %>
+        <%= f.select :start_point_name, 
+                     options_for_select(['佐沼高等学校', '登米総合産業高等学校', '登米高等学校', '飛鳥未来きずな高等学校', '自宅']), 
+                     { prompt: '選択してください' }, 
+                     class: 'form-select',
+                     data: { action: "change->form-wizard#toggleStartMap" } %>
+      </div>
+
+      <div data-form-wizard-target="startMapContainer" style="display: none;">
+        <p>地図の中心をクリックして出発地を指定してください</p>
+        <div data-form-wizard-target="startMap" style="height: 400px; width: 100%;"></div>
+      </div>
+      
+      <%= f.hidden_field :start_point_location, data: { form_wizard_target: "startLocation" } %>
+      
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ2: 目的地 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>目的地を選択してください</h4>
+
+      <div class="mb-3">
+        <%= f.label :end_point_name, "目的地の名称", class: "form-label" %>
+        <%= f.select :end_point_name, 
+                      options_for_select(['佐沼高等学校', '登米総合産業高等学校', '登米高等学校', '飛鳥未来きずな高等学校', '自宅']), 
+                      { prompt: '選択してください' }, 
+                      class: 'form-select',
+                      data: { action: "change->form-wizard#toggleEndMap" } %>
+      </div>
+
+      <div data-form-wizard-target="endMapContainer" style="display: none;">
+        <p>地図の中心をクリックして到着地を指定してください</p>
+        <div data-form-wizard-target="endMap" style="height: 400px; width: 100%;"></div>
+      </div>
+
+      <%= f.hidden_field :end_point_location, data: { form_wizard_target: "endLocation" } %>
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ3: 既存サービスの利用可否 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>既存の路線やダイヤは利用可能ですか？</h4>
+      
+      <div class="form-check mb-2">
+        <%= f.radio_button :is_existing_service_available, true, class: "form-check-input", id: "service_available_true" %>
+        <%= f.label :is_existing_service_available, "はい、利用できます", value: true, class: "form-check-label", for: "service_available_true" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :is_existing_service_available, false, class: "form-check-input", id: "service_available_false", checked: true %>
+        <%= f.label :is_existing_service_available, "いいえ、利用できません", value: false, class: "form-check-label", for: "service_available_false" %>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ4: 曜日と時間 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>曜日と時間を選択してください</h4>
+      
+      <%# ▼▼▼ fields_for を使って RequestedTime のフォームを作成 ▼▼▼ %>
+      <%= f.fields_for :requested_times do |time_form| %>
+        <%# このブロックは空のままでOK。動的な追加のベースとして使われます。 %>
+      <% end %>
+
+      <div class="mb-3">
+        <label class="form-label">利用する曜日と時間を指定してください</label>
+        
+        <%# 各曜日のチェックボックスと入力欄を生成 %>
+        <% ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日'].each_with_index do |day, index| %>
+          <div class="border p-2 mb-2 rounded">
+            <div class="form-check">
+              <%# ↓↓↓ チェックボックスに data-action を追加 ↓↓↓ %>
+              <input type="checkbox" name="requested_route[requested_times_attributes][<%= index %>][requested_day]" value="<%= day %>" class="form-check-input" id="day_<%= index %>" data-action="change->form-wizard#toggleTimeField">
+              <label class="form-check-label" for="day_<%= index %>"><%= day %></label>
+            </div>
+
+            <%# ↓↓↓ 時刻入力欄のコンテナ。最初は非表示にしておく ↓↓↓ %>
+            <div class="mt-2 d-none" data-form-wizard-target="timeFieldContainer">
+              <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="requested_route[requested_times_attributes][<%= index %>][departure_or_arrival]" id="time_type_start_<%= index %>" value="出発" checked>
+                    <label class="form-check-label" for="time_type_start_<%= index %>">出発</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="requested_route[requested_times_attributes][<%= index %>][departure_or_arrival]" id="time_type_end_<%= index %>" value="到着">
+                    <label class="form-check-label" for="time_type_end_<%= index %>">到着</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <input type="time" name="requested_route[requested_times_attributes][<%= index %>][requested_time]" class="form-control">
+                </div>
+              </div>
+              <%# この曜日のデータを削除するための隠しフィールド。チェックが外れた時に使う %>
+              <input type="hidden" name="requested_route[requested_times_attributes][<%= index %>][_destroy]" value="1" data-form-wizard-target="destroyField">
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%# ▲▲▲ fields_for ここまで ▲▲▲ %>
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">確認へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ5: 確認画面 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>入力内容の確認</h4>
+      <div id="confirmation-summary">
+        <%# ここにJavaScriptで入力内容を表示します %>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">修正する</button>
+        <%= f.submit "送信", class: "btn btn-success" %>
+      </div>
+    </div>
+
+  <% end %>
+</div>
