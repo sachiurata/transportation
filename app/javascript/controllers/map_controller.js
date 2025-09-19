@@ -40,7 +40,7 @@ export default class extends Controller {
     const bounds = new google.maps.LatLngBounds()
     // 他のメソッドからmapオブジェクトを参照できるように、this.mapに格納する
     this.map = new google.maps.Map(this.mapTarget, {
-      mapId: "YOUR_MAP_ID",
+      mapId: "ce37841bfd2baaafb40ee105",
       disableDefaultUI: true,
     })
 
