@@ -1,4 +1,4 @@
-\restrict dlzipQciusb1hoJqZ2C2a5IEl4kv02uHucliM1KarbGjuWrikDU3p09SxNR1n6x
+\restrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
 
 -- Dumped from database version 15.8 (Debian 15.8-1.pgdg110+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-0+deb12u1)
@@ -195,7 +195,8 @@ CREATE TABLE public.requested_times (
     requested_day character varying NOT NULL,
     requested_time time without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    departure_or_arrival character varying
 );
 
 
@@ -383,11 +384,12 @@ ALTER TABLE ONLY public.requested_routes
 -- PostgreSQL database dump complete
 --
 
-\unrestrict dlzipQciusb1hoJqZ2C2a5IEl4kv02uHucliM1KarbGjuWrikDU3p09SxNR1n6x
+\unrestrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
 
 SET search_path TO "$user", public, topology, tiger;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250916072518'),
 ('20250904235509'),
 ('20250904051813'),
 ('20250904035633'),

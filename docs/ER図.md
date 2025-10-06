@@ -1,4 +1,3 @@
-
 ````mermaid
 erDiagram
     USERS ||--o{ REQUESTED_ROUTES : "registers"
@@ -36,6 +35,7 @@ erDiagram
        int requested_route_id FK "NOT NULL"
        string requested_day "NOT NULL 曜日"
        time requested_time "NOT NULL 希望時間帯"
+       string departure_or_arrival "NOT NULL"
        datetime created_at
        datetime updated_at
     }

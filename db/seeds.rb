@@ -47,13 +47,15 @@ if Rails.env.development?
   RequestedTime.find_or_create_by!(
     requested_route: requested_route1,
     requested_day: '月曜日',
-    requested_time: '16:30'
+    requested_time: '16:30',
+    departure_or_arrival: "出発"
   )
 
   RequestedTime.find_or_create_by!(
     requested_route: requested_route1,
     requested_day: '金曜日',
-    requested_time: '17:30'
+    requested_time: '17:30',
+    departure_or_arrival: "出発"
   )
 
   # --- ユーザー2のデータ ---
@@ -69,13 +71,15 @@ if Rails.env.development?
   RequestedTime.find_or_create_by!(
     requested_route: requested_route2,
     requested_day: '火曜日',
-    requested_time: '18:00'
+    requested_time: '18:00',
+    departure_or_arrival: "出発"
   )
 
   RequestedTime.find_or_create_by!(
     requested_route: requested_route2,
     requested_day: '木曜日',
-    requested_time: '19:00'
+    requested_time: '19:00',
+    departure_or_arrival: "出発"
   )
 
   puts 'Seeding for development environment is complete.'
