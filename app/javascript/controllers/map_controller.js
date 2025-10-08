@@ -65,6 +65,19 @@ export default class extends Controller {
       const startMarker = new google.maps.Marker({ position: startPoint, map: this.map, icon: startIcon })
       const endMarker = new google.maps.Marker({ position: endPoint, map: this.map, icon: endIcon })
 
+      if (routeData.comment) {
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<p>${routeData.comment}</p>`
+        });
+
+        startMarker.addListener('click', () => {
+          infoWindow.open(this.map, startMarker);
+        });
+        endMarker.addListener('click', () => {
+            infoWindow.open(this.map, endMarker);
+        });
+      }
+
       // ルート検索のリクエストを作成
       const request = {
         origin: startPoint,

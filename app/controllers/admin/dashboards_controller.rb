@@ -12,7 +12,8 @@ class Admin::DashboardsController < Admin::BaseController
         start_lat: route.start_point_location.y,
         start_lng: route.start_point_location.x,
         end_lat: route.end_point_location.y,
-        end_lng: route.end_point_location.x
+        end_lng: route.end_point_location.x,
+        comment: route.comment
       }
     end
   end
