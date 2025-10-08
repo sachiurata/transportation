@@ -12,8 +12,10 @@ erDiagram
     }
     USERS {
         int id PK "NOT NULL"
-        string email "NOT NULL"
+        string user_name "NOT NULL"
         string password_digest "NOT NULL"
+        string postcode
+        int num_of_children "NOT NULL"
         datetime created_at
         datetime updated_at
     }

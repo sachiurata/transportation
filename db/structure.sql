@@ -1,8 +1,3 @@
-\restrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
-
--- Dumped from database version 15.8 (Debian 15.8-1.pgdg110+1)
--- Dumped by pg_dump version 15.14 (Debian 15.14-0+deb12u1)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -234,8 +229,10 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    email character varying NOT NULL,
+    user_name character varying NOT NULL,
     password_digest character varying NOT NULL,
+    postcode character varying,
+    num_of_children integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -358,13 +355,6 @@ CREATE INDEX index_requested_times_on_requested_route_id ON public.requested_tim
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
-
-
---
 -- Name: requested_times fk_rails_16f74434d3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -384,18 +374,14 @@ ALTER TABLE ONLY public.requested_routes
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
-
-SET search_path TO "$user", public, topology, tiger;
+SET search_path TO "$user", public, tiger, topology;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20250916072518'),
 ('20250904235509'),
 ('20250904051813'),
 ('20250904035633'),
-('20250904035407'),
 ('20250904033230'),
-('20250904032116'),
 ('20250904030955'),
 ('20250904000000');
 

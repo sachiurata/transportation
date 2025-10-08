@@ -4,6 +4,6 @@ class User < ApplicationRecord
   # パスワードを安全に保存するための機能
   has_secure_password
 
-  # emailの入力は必須、かつユニークであることを保証
-  validates :email, presence: true, uniqueness: true
+  # user_nameの入力は必須、かつユニークであることを保証
+  validates :user_name, presence: true, uniqueness: true
 end
