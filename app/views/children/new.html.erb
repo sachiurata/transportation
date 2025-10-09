@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h1>お子さんの情報登録</h1>
+  <p>調査対象となるお子さんの情報を入力してください。</p>
+
+  <%= form_with model: [@user, @child], url: user_children_path(@user) do |form| %>
+    <% if @child.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@child.errors.count, "error") %> prohibited this child from being saved:</h2>
+        <ul>
+          <% @child.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="mb-3">
+          <%= form.label :school_type, "学校種別", class: "form-label" %>
+          <%= form.select :school_type, [['小学校', 'elementary'], ['中学校', 'secondary'], ['高等学校', 'high']], { prompt: '選択してください' }, class: "form-select" %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :grade, "学年", class: "form-label" %>
+          <%= form.select :grade, (1..6).to_a, { prompt: '選択してください' }, class: "form-select" %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :school_name, "学校名", class: "form-label" %>
+          <%= form.select :school_name, Child::SCHOOL_NAMES, { prompt: '選択してください' }, class: "form-select" %>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-grid">
+      <%= form.submit "登録する", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

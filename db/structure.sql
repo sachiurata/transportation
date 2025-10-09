@@ -162,7 +162,7 @@ CREATE TABLE public.children (
     postcode character varying,
     school_name character varying,
     grade integer NOT NULL,
-    school_type integer DEFAULT 0 NOT NULL,
+    school_type integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -804,6 +804,7 @@ ALTER TABLE ONLY public.answer_options
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251009080532'),
 ('20251009050239'),
 ('20251009050153'),
 ('20251009050009'),

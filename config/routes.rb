@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   # ユーザーアカウント
-  resources :users, only: [ :new, :create ]
+  resources :users, only: [ :new, :create, :show ] do
+    resources :children, only: [ :new, :create, :edit, :update ]
+  end
   resource :session, only: [ :new, :create, :destroy ]
 
   # 移動希望（リクエスト）
