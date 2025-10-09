@@ -7,50 +7,52 @@
         </div>
         <div class="card-body">
           <%= form_with model: @user, url: users_path, method: :post do |form| %>
-            <% if @user.errors.any? %>
-              <div class="alert alert-danger">
-                <h2>以下の理由により登録できませんでした</h2>
-                <ul>
-                  <% @user.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
+            <%= form.fields_for :user_profile do |profile_form| %>
+              <% if @user.errors.any? %>
+                <div class="alert alert-danger">
+                  <h2>以下の理由により登録できませんでした</h2>
+                  <ul>
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="mb-3">
+                <label for="user_user_name" class="form-label">ニックネーム<span class="text-danger">*</span></label>
+                <div id="passwordHelpBlock" class="form-text">
+                  個人情報が含まれないニックネームを入力してください。
+                </div>
+                <%= form.text_field :user_name, class: "form-control" %>
+              </div>
+
+              <div class="mb-3">
+                <label for="user_password" class="form-label">パスワード<span class="text-danger">*</span></label>
+                <%= form.password_field :password, class: "form-control" %>
+              </div>
+
+              <div class="mb-3">
+                <label for="user_password_confirmation" class="form-label">パスワード（確認）<span class="text-danger">*</span></label>
+                <%= form.password_field :password_confirmation, class: "form-control" %>
+              </div>
+
+              <div class="mb-3">
+                <label for="user_profile_postcode" class="form-label">郵便番号</label>
+                <p id="passwordHelpBlock" class="form-text">
+                  居住地域の特定に使用します。ハイフンなしで入力してください。
+                </p>
+                <%= profile_form.text_field :postcode, class: "form-control" %>
+              </div>
+
+              <div class="mb-3">
+                <label for="user_profile_num_of_objects" class="form-label">調査対象者の人数<span class="text-danger">*</span></label>
+                <div id="passwordHelpBlock" class="form-text">
+                  このアンケートの対象となる小学校高学年から高校生までの人数を入力してください。
+                </div>
+                <%= profile_form.number_field :num_of_objects, class: "form-control" %>
               </div>
             <% end %>
-
-            <div class="mb-3">
-              <label for="user_user_name" class="form-label">ニックネーム<span class="text-danger">*</span></label>
-              <div id="passwordHelpBlock" class="form-text">
-                個人情報が含まれないニックネームを入力してください。
-              </div>
-              <%= form.text_field :user_name, class: "form-control" %>
-            </div>
-
-            <div class="mb-3">
-              <label for="user_password" class="form-label">パスワード<span class="text-danger">*</span></label>
-              <%= form.password_field :password, class: "form-control" %>
-            </div>
-
-            <div class="mb-3">
-              <label for="user_password_confirmation" class="form-label">パスワード（確認）<span class="text-danger">*</span></label>
-              <%= form.password_field :password_confirmation, class: "form-control" %>
-            </div>
-
-            <div class="mb-3">
-              <label for="user_postcode" class="form-label">郵便番号</label>
-              <p id="passwordHelpBlock" class="form-text">
-                居住地域の特定に使用します。ハイフンなしで入力してください。
-              </p>
-              <%= form.text_field :postcode, class: "form-control" %>
-            </div>
-
-            <div class="mb-3">
-              <label for="user_num_of_children" class="form-label">お子様の人数<span class="text-danger">*</span></label>
-              <div id="passwordHelpBlock" class="form-text">
-                このアンケートの対象となる小学校高学年から高校生までのお子様の人数を入力してください。
-              </div>
-              <%= form.number_field :num_of_children, class: "form-control" %>
-            </div>
 
             <div class="d-grid">
               <%= form.submit "登録", class: "btn btn-primary" %>
