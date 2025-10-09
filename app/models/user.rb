@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_many :requested_routes, dependent: :destroy
+  has_one :user_profile, dependent: :destroy
+  has_many :children, dependent: :destroy
 
   # パスワードを安全に保存するための機能
   has_secure_password
