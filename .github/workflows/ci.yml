@@ -69,7 +69,8 @@ jobs:
         env:
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
-          POSTGRES_DB: rails_test
+          POSTGRES_DB: transportation_test
+
         ports:
           - 5432:5432
         options: >-
@@ -90,6 +91,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Ensure test DB user and DB exist
+        run: |
+          psql -h localhost -U postgres -c "CREATE USER rails WITH PASSWORD 'password';" || true
+          psql -h localhost -U postgres -c "CREATE DATABASE rails_test OWNER rails;" || true
 
       - name: Run tests
         env:
