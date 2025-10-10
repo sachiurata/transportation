@@ -1,2 +1,28 @@
-<h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h1>ログイン</h1>
+        </div>
+        <div class="card-body">
+          <%= form_with scope: :session, url: session_path do |form| %>
+            <div class="mb-3">
+              <%= form.label :user_name, 'ニックネーム', class: "form-label" %>
+              <%= form.text_field :user_name, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :password, 'パスワード', class: "form-label" %>
+              <%= form.password_field :password, class: "form-control" %>
+            </div>
+
+            <div class="d-grid">
+              <%= form.submit 'ログイン', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
