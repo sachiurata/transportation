@@ -17,6 +17,10 @@ development:
 test:
   <<: *default
   database: transportation_test
+  username: postgres
+  password:
+  host: localhost
+
 
 production:
   <<: *default
