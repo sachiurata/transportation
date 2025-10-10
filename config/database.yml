@@ -17,6 +17,8 @@ development:
 test:
   <<: *default
   database: <%= ENV.fetch("PGDATABASE", "transportation_test") %>
+  username: rails
+  password: password
 
 production:
   <<: *default
