@@ -19,7 +19,7 @@ test:
   database: transportation_test
   username:  <%= ENV["POSTGRES_USER"] || "rails" %>
   password: <%= ENV["POSTGRES_PASSWORD"] || "password" %>
-  host: localhost
+  host: <%= ENV["POSTGRES_HOST"] || "localhost" %>
 
 
 production:
