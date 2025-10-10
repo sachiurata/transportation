@@ -92,20 +92,16 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Ensure test DB user and DB exist
-        run: |
-          psql -h localhost -U postgres -c "CREATE USER rails WITH PASSWORD 'password';" || true
-          psql -h localhost -U postgres -c "CREATE DATABASE rails_test OWNER rails;" || true
-
       - name: Run tests
         env:
           RAILS_ENV: test 
           PGHOST: localhost
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          PGUSER: rails
+          PGPASSWORD: password
+          PGDATABASE: transportation_test
           # REDIS_URL: redis://localhost:6379/0
         run: |
-          bin/rails db:test:prepare
+          bin/rails db:prepare
           bin/rails test
 
       - name: Keep screenshots from failed system tests
