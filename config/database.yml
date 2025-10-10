@@ -1,14 +1,14 @@
 # PostgreSQL.
 default: &default
-  adapter: postgis
+  adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   # これらの値はdocker-compose.ymlなどで環境変数として設定します
   host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
-  username: <%= ENV.fetch("POSTGRES_USER") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  username: <%= ENV.fetch("POSTGRES_USER", "rails") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "password") %>
 
 development:
   <<: *default
