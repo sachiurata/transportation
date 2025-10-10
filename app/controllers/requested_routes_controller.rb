@@ -4,17 +4,22 @@ class RequestedRoutesController < ApplicationController
 
   def new
     @requested_route = RequestedRoute.new
-    @children = current_user.children
+    # URLのchild_idから対象のお子様を特定
+    @child = Child.find_by(id: params[:child_id])
+    # お子様が見つからない場合はマイページに戻す
+    unless @child
+      redirect_to user_path(current_user), alert: "対象のお子さんが見つかりません。"
+    end
   end
 
   def create
-    child = current_user.children.find(params[:requested_route][:subject_id])
-    @requested_route = child.requested_routes.build(requested_route_params.merge(subject_type: "Child"))
-
+    # subject_id と subject_type をマージして、どのオブジェクトに関連付くかを指定
+    @requested_route = RequestedRoute.new(requested_route_params.merge(subject_type: "Child"))
     if @requested_route.save
       redirect_to root_path, notice: "送信完了"
     else
-      @children = current_user.children
+      # エラー時に@childを再設定して、newテンプレートを正しく表示する
+      @child = current_user.children.find_by(id: requested_route_params[:subject_id])
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,6 +37,7 @@ class RequestedRoutesController < ApplicationController
 
   def requested_route_params
     params.require(:requested_route).permit(
+      :child_id,
       :start_point_location,
       :end_point_location,
       :is_existing_service_available,

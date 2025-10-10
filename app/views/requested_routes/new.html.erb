@@ -1,8 +1,10 @@
 <div class="container mt-4" data-controller="form-wizard" data-form-wizard-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>">
   <%= form_with model: @requested_route, url: requested_routes_path, method: :post do |f| %>
     <div class="mb-3">
-      <%= f.label :subject_id, "対象のお子さんを選択", class: "form-label" %>
-      <%= f.select :subject_id, options_from_collection_for_select(@children, :id, :school_name), { prompt: '選択してください' }, class: 'form-select' %>
+      <%#= f.label :subject_id, "対象のお子さんを選択", class: "form-label" %>
+      <%# params[:child_id] があれば、その子を初期選択状態にする %>
+      <%#= f.select :subject_id, options_from_collection_for_select(@children, :id, params[:child_id]), { prompt: '選択してください' }, class: 'form-select' %>
+      <%= f.hidden_field :subject_id, value: @child.id %>
     </div>
 
     <%# --- ステップ1: 出発地 --- %>
