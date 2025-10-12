@@ -56,20 +56,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     services:
       postgres:
-        image: postgis/postgis:14-3.4 
+        image: postgis/postgis:14-3.4
         env:
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
-          # database.yml の test ブロックとデータベース名を一致させます
           POSTGRES_DB: transportation_test
         ports:
           - 5432:5432
@@ -94,11 +86,10 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_ENV: test 
-          PGHOST: localhost
-          # database.yml が読み込む環境変数を設定します
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          RAILS_ENV: test
+          # DATABASE_URL を直接指定して接続情報を強制します。
+          # これにより database.yml の設定は無視されます。
+          DATABASE_URL: "postgis://rails:password@localhost:5432/transportation_test"
         run: |
           bin/rails db:prepare
           bin/rails test
