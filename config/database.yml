@@ -4,7 +4,7 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
-  # 環境変数がなければ 'postgres' ユーザーを試みます（ローカル開発用）
+  # 環境変数からユーザー名を取得。CIでは"rails"、ローカルでは"postgres"を想定。
   username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
   password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
 
@@ -13,11 +13,15 @@ development:
   database: transportation_development
 
 test:
-  <<: *default
+  # CI/CD環境での接続エラーを確実に解消するため、値を直接指定します。
+  # 継承や環境変数参照をなくし、設定の曖昧さを排除します。
+  adapter: postgis
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: transportation_test
-  # CI環境では 'rails' ユーザーが使われるように指定
-  username: <%= ENV.fetch("POSTGRES_USER", "rails") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD", "password") %>
+  host: localhost
+  username: rails
+  password: password
 
 production:
   <<: *default
