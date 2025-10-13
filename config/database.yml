@@ -22,6 +22,7 @@ test:
   host: localhost
   username: rails
   password: password
+  port: 5432
 
 production:
   <<: *default
