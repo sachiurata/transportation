@@ -6,5 +6,5 @@ class AdminUser < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   # 管理者の権限設定（最低2つ以上の値を定義）
-  enum :role, { general: 0, superadmin: 1 }
+  enum role: { general: 0, superadmin: 1 }
 end

@@ -6,7 +6,7 @@ class Child < ApplicationRecord
   validates :school_type, presence: true
   validates :grade, presence: true
 
-  enum :school_type, { elementary: 0, secondary: 1, high: 2 }
+  enum school_type: { elementary: 0, secondary: 1, high: 2 }
 
   SCHOOL_NAMES = [
     "佐沼小学校",
