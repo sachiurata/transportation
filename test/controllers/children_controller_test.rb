@@ -1,13 +1,28 @@
 require "test_helper"
 
 class ChildrenControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:one) # ログインしているユーザーを想定
+    # 必要に応じてログイン処理をここに記述します
+    # 例: post login_url, params: { user_name: @user.user_name, password: 'password' }
+  end
+
   test "should get new" do
-    get children_new_url
+    get new_child_url
     assert_response :success
   end
 
-  test "should get create" do
-    get children_create_url
-    assert_response :success
+  test "should create child" do
+    assert_difference("Child.count") do
+      post children_url, params: { child: {
+        user_id: @user.id,
+        grade: 1,
+        school_type: "0"
+        # school_name や postcode など、他の属性も必要に応じて追加
+      } }
+    end
+
+    # 作成後のリダイレクト先が異なる場合は修正してください
+    assert_redirected_to user_path(@user)
   end
 end
