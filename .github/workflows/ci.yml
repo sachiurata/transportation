@@ -88,8 +88,8 @@ jobs:
       - name: Create root role in PostgreSQL
         env:
           PGPASSWORD: password
-        # 接続ユーザーを -U postgres から -U rails に変更します
-        run: psql -h localhost -U rails -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
+        # 接続するデータベースを -d postgres で明示的に指定します
+        run: psql -h localhost -U rails -d postgres -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
 
       - name: Run tests
         env:
