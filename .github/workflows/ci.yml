@@ -88,8 +88,8 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # 接続情報をDATABASE_URLで引き続き指定します
-          DATABASE_URL: "postgis://root:password@localhost:5432/transportation_test"
+          # 接続ユーザーを 'root' から 'rails' に修正します
+          DATABASE_URL: "postgis://rails:password@localhost:5432/transportation_test"
         run: |
           bin/rails db:prepare
           bin/rails test
