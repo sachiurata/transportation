@@ -2,24 +2,32 @@
 default: &default
   adapter: postgis
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  # これらの値はdocker-compose.ymlなどで環境変数として設定します
   host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
-  username: <%= ENV.fetch("POSTGRES_USER") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  # usernameのデフォルト値を設定します。
+  # これにより、意図しないユーザー名（例: root）での接続を防ぎます。
+  username: <%= ENV.fetch("POSTGRES_USER", "rails") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
 
 development:
   <<: *default
   database: transportation_development
+  # 開発環境用のユーザー名を明示的に指定
+  username: <%= ENV.fetch("POSTGRES_USER", "vscode") %>
 
 test:
-  <<: *default
+  # CI/CD環境での接続エラーを確実に解消するため、値を直接指定します。
+  # 継承や環境変数参照をなくし、設定の曖昧さを排除します。
+  adapter: postgis
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: transportation_test
+  host: localhost
+  username: rails
+  password: password
 
 production:
   <<: *default
-  database: transportation_production
-  # 本番環境ではよりセキュアな方法でパスワードを管理してください
-  # password: <%= ENV["YOUR_APP_DATABASE_PASSWORD"] %>
+  # 本番環境では DATABASE_URL 環境変数を使用するのが一般的です。
+  # これにより、CI環境で不要な環境変数を探してエラーになることを防ぎます。
+  url: <%= ENV["DATABASE_URL"] %>

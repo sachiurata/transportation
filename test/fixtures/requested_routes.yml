@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
   start_point_name: "出発点A"
-  start_point_location: "SRID=4326;POINT(141.2043 38.6913)"
+  start_point_location: "POINT(139.767125 35.681236)" # 東京駅
   end_point_name: "到着点B"
-  end_point_location: "SRID=4326;POINT(141.3651 38.7566)"
+  end_point_location: "POINT(135.502165 34.693738)" # 大阪駅
   purpose: "通勤"
   is_existing_service_available: false
+  subject: one (User) # users.ymlの'one'に関連付け、モデルはUser
 
 two:
-  user: two
   start_point_name: "出発点C"
-  start_point_location: "SRID=4326;POINT(141.1 38.6)"
+  start_point_location: "POINT(139.691706 35.689487)" # 新宿駅
   end_point_name: "到着点D"
-  end_point_location: "SRID=4326;POINT(141.2 38.7)"
+  end_point_location: "POINT(139.745433 35.658581)" # 渋谷駅
   purpose: "買い物"
   is_existing_service_available: true
+  subject: two (User) # users.ymlの'two'に関連付け、モデルはUser

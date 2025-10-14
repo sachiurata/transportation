@@ -87,7 +87,7 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test 
-          PGHOST: localhost
+          POSTGRES_HOST: localhost 
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
         run: |

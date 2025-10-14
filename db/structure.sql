@@ -1,8 +1,3 @@
-\restrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
-
--- Dumped from database version 15.8 (Debian 15.8-1.pgdg110+1)
--- Dumped by pg_dump version 15.14 (Debian 15.14-0+deb12u1)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -13,48 +8,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: tiger; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA tiger;
-
-
---
--- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA tiger_data;
-
-
---
--- Name: topology; Type: SCHEMA; Schema: -; Owner: -
---
-
-CREATE SCHEMA topology;
-
-
---
--- Name: SCHEMA topology; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON SCHEMA topology IS 'PostGIS Topology schema';
-
-
---
--- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
-
-
---
--- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
-
 
 --
 -- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
@@ -68,34 +21,6 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 --
 
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
-
-
---
--- Name: postgis_tiger_geocoder; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder WITH SCHEMA tiger;
-
-
---
--- Name: EXTENSION postgis_tiger_geocoder; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION postgis_tiger_geocoder IS 'PostGIS tiger geocoder and reverse geocoder';
-
-
---
--- Name: postgis_topology; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS postgis_topology WITH SCHEMA topology;
-
-
---
--- Name: EXTENSION postgis_topology; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION postgis_topology IS 'PostGIS topology spatial types and functions';
 
 
 SET default_tablespace = '';
@@ -136,6 +61,86 @@ ALTER SEQUENCE public.admin_users_id_seq OWNED BY public.admin_users.id;
 
 
 --
+-- Name: answer_options; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.answer_options (
+    id bigint NOT NULL,
+    answer_id bigint NOT NULL,
+    question_option_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: answer_options_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.answer_options_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: answer_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.answer_options_id_seq OWNED BY public.answer_options.id;
+
+
+--
+-- Name: answers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.answers (
+    id bigint NOT NULL,
+    subject_type character varying NOT NULL,
+    subject_id bigint NOT NULL,
+    question_id bigint NOT NULL,
+    free_text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN answers.subject_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.answers.subject_id IS '''Child''など';
+
+
+--
+-- Name: COLUMN answers.free_text; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.answers.free_text IS '自由回答';
+
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.answers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: answers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.answers_id_seq OWNED BY public.answers.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -148,12 +153,156 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: children; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.children (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    postcode character varying,
+    school_name character varying,
+    grade integer NOT NULL,
+    school_type integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN children.school_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.children.school_type IS 'enum: elementary, secondary, high';
+
+
+--
+-- Name: children_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.children_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: children_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.children_id_seq OWNED BY public.children.id;
+
+
+--
+-- Name: question_options; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.question_options (
+    id bigint NOT NULL,
+    question_id bigint NOT NULL,
+    text character varying NOT NULL,
+    display_order integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN question_options.text; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.question_options.text IS '選択肢の文言';
+
+
+--
+-- Name: COLUMN question_options.display_order; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.question_options.display_order IS '表示順';
+
+
+--
+-- Name: question_options_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.question_options_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: question_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.question_options_id_seq OWNED BY public.question_options.id;
+
+
+--
+-- Name: questions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.questions (
+    id bigint NOT NULL,
+    text text NOT NULL,
+    question_type integer NOT NULL,
+    display_order integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN questions.text; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.questions.text IS '質問文';
+
+
+--
+-- Name: COLUMN questions.question_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.questions.question_type IS 'enum: multiple_choice, free_text, multiple_choice_and_free_text';
+
+
+--
+-- Name: COLUMN questions.display_order; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.questions.display_order IS '表示順';
+
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.questions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.questions_id_seq OWNED BY public.questions.id;
+
+
+--
 -- Name: requested_routes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.requested_routes (
     id bigint NOT NULL,
-    user_id bigint NOT NULL,
+    subject_type character varying NOT NULL,
+    subject_id bigint NOT NULL,
     start_point_name character varying,
     start_point_location public.geometry NOT NULL,
     end_point_name character varying,
@@ -164,6 +313,41 @@ CREATE TABLE public.requested_routes (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: COLUMN requested_routes.start_point_name; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_routes.start_point_name IS '出発地名';
+
+
+--
+-- Name: COLUMN requested_routes.start_point_location; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_routes.start_point_location IS '出発地点';
+
+
+--
+-- Name: COLUMN requested_routes.end_point_name; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_routes.end_point_name IS '目的地名';
+
+
+--
+-- Name: COLUMN requested_routes.end_point_location; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_routes.end_point_location IS '目的地点';
+
+
+--
+-- Name: COLUMN requested_routes.purpose; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_routes.purpose IS '通学,部活,習い事など';
 
 
 --
@@ -194,10 +378,31 @@ CREATE TABLE public.requested_times (
     requested_route_id bigint NOT NULL,
     requested_day character varying NOT NULL,
     requested_time time without time zone NOT NULL,
+    departure_or_arrival character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    departure_or_arrival character varying
+    updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: COLUMN requested_times.requested_day; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_times.requested_day IS '曜日';
+
+
+--
+-- Name: COLUMN requested_times.requested_time; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_times.requested_time IS '希望時間帯';
+
+
+--
+-- Name: COLUMN requested_times.departure_or_arrival; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.requested_times.departure_or_arrival IS '出発 or 到着';
 
 
 --
@@ -229,12 +434,52 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: user_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_profiles (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    postcode character varying,
+    num_of_objects integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: COLUMN user_profiles.num_of_objects; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.user_profiles.num_of_objects IS '調査対象者の数';
+
+
+--
+-- Name: user_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_profiles_id_seq OWNED BY public.user_profiles.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    email character varying NOT NULL,
+    user_name character varying NOT NULL,
     password_digest character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -268,6 +513,41 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: answer_options id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answer_options ALTER COLUMN id SET DEFAULT nextval('public.answer_options_id_seq'::regclass);
+
+
+--
+-- Name: answers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers ALTER COLUMN id SET DEFAULT nextval('public.answers_id_seq'::regclass);
+
+
+--
+-- Name: children id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.children ALTER COLUMN id SET DEFAULT nextval('public.children_id_seq'::regclass);
+
+
+--
+-- Name: question_options id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.question_options ALTER COLUMN id SET DEFAULT nextval('public.question_options_id_seq'::regclass);
+
+
+--
+-- Name: questions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.questions ALTER COLUMN id SET DEFAULT nextval('public.questions_id_seq'::regclass);
+
+
+--
 -- Name: requested_routes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -279,6 +559,13 @@ ALTER TABLE ONLY public.requested_routes ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.requested_times ALTER COLUMN id SET DEFAULT nextval('public.requested_times_id_seq'::regclass);
+
+
+--
+-- Name: user_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles ALTER COLUMN id SET DEFAULT nextval('public.user_profiles_id_seq'::regclass);
 
 
 --
@@ -297,11 +584,51 @@ ALTER TABLE ONLY public.admin_users
 
 
 --
+-- Name: answer_options answer_options_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answer_options
+    ADD CONSTRAINT answer_options_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: answers answers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT answers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: children children_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.children
+    ADD CONSTRAINT children_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: question_options question_options_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.question_options
+    ADD CONSTRAINT question_options_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: questions questions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.questions
+    ADD CONSTRAINT questions_pkey PRIMARY KEY (id);
 
 
 --
@@ -329,6 +656,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -344,10 +679,52 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 
 
 --
--- Name: index_requested_routes_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_answer_options_on_answer_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_requested_routes_on_user_id ON public.requested_routes USING btree (user_id);
+CREATE INDEX index_answer_options_on_answer_id ON public.answer_options USING btree (answer_id);
+
+
+--
+-- Name: index_answer_options_on_question_option_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_answer_options_on_question_option_id ON public.answer_options USING btree (question_option_id);
+
+
+--
+-- Name: index_answers_on_question_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_answers_on_question_id ON public.answers USING btree (question_id);
+
+
+--
+-- Name: index_answers_on_subject; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_answers_on_subject ON public.answers USING btree (subject_type, subject_id);
+
+
+--
+-- Name: index_children_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_children_on_user_id ON public.children USING btree (user_id);
+
+
+--
+-- Name: index_question_options_on_question_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_question_options_on_question_id ON public.question_options USING btree (question_id);
+
+
+--
+-- Name: index_requested_routes_on_subject; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_requested_routes_on_subject ON public.requested_routes USING btree (subject_type, subject_id);
 
 
 --
@@ -358,10 +735,10 @@ CREATE INDEX index_requested_times_on_requested_route_id ON public.requested_tim
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_profiles_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+CREATE UNIQUE INDEX index_user_profiles_on_user_id ON public.user_profiles USING btree (user_id);
 
 
 --
@@ -373,29 +750,71 @@ ALTER TABLE ONLY public.requested_times
 
 
 --
--- Name: requested_routes fk_rails_5b69423a9d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: answers fk_rails_3d5ed4418f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.requested_routes
-    ADD CONSTRAINT fk_rails_5b69423a9d FOREIGN KEY (user_id) REFERENCES public.users(id);
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT fk_rails_3d5ed4418f FOREIGN KEY (question_id) REFERENCES public.questions(id);
+
+
+--
+-- Name: user_profiles fk_rails_87a6352e58; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT fk_rails_87a6352e58 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: children fk_rails_a51d7cfb22; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.children
+    ADD CONSTRAINT fk_rails_a51d7cfb22 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: answer_options fk_rails_acb3faeaf6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answer_options
+    ADD CONSTRAINT fk_rails_acb3faeaf6 FOREIGN KEY (question_option_id) REFERENCES public.question_options(id);
+
+
+--
+-- Name: question_options fk_rails_b9c5f61cf9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.question_options
+    ADD CONSTRAINT fk_rails_b9c5f61cf9 FOREIGN KEY (question_id) REFERENCES public.questions(id);
+
+
+--
+-- Name: answer_options fk_rails_c8739a0222; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.answer_options
+    ADD CONSTRAINT fk_rails_c8739a0222 FOREIGN KEY (answer_id) REFERENCES public.answers(id);
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Aik2tYyUzrYlRo6pgd48PKopud7sM4Alc0aydCj5haAx3Q6HRd1cmJGmDrdUhyI
-
-SET search_path TO "$user", public, topology, tiger;
+SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20250916072518'),
+('20251009080532'),
+('20251009050239'),
+('20251009050153'),
+('20251009050009'),
+('20251009045848'),
+('20251009045639'),
+('20251009044953'),
 ('20250904235509'),
 ('20250904051813'),
 ('20250904035633'),
-('20250904035407'),
 ('20250904033230'),
-('20250904032116'),
 ('20250904030955'),
 ('20250904000000');
 
