@@ -1,7 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
   start_point_name: "出発点A"
   start_point_location: "POINT(139.767125 35.681236)" # 東京駅
   end_point_name: "到着点B"
@@ -11,7 +10,6 @@ one:
   subject: one (User) # users.ymlの'one'に関連付け、モデルはUser
 
 two:
-  user: two
   start_point_name: "出発点C"
   start_point_location: "POINT(139.691706 35.689487)" # 新宿駅
   end_point_name: "到着点D"
