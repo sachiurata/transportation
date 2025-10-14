@@ -4,6 +4,9 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch("POSTGRES_HOST", "localhost") %>
+  # usernameのデフォルト値を設定します。
+  # これにより、意図しないユーザー名（例: root）での接続を防ぎます。
+  username: <%= ENV.fetch("POSTGRES_USER", "rails") %>
   password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
 
 development:
