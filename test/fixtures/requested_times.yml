@@ -4,13 +4,16 @@ one:
   requested_route: one
   requested_day: '月'
   requested_time: '08:30:00'
+  departure_or_arrival: 'departure'
 
 two:
-  requested_route: one 
+  requested_route: one
   requested_day: '水'
   requested_time: '18:00:00'
+  departure_or_arrival: 'arrival'
 
 three:
-  requested_route: two 
+  requested_route: two
   requested_day: '土'
   requested_time: '10:00:00'
+  departure_or_arrival: 'departure'
