@@ -60,6 +60,7 @@ jobs:
       postgres:
         image: postgis/postgis:14-3.4
         env:
+          # railsユーザーとpasswordも引き続き設定しておきます
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
           POSTGRES_DB: transportation_test
@@ -84,12 +85,17 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      # このステップを追加して、'root'ユーザーを強制的に作成します
+      - name: Create root role in PostgreSQL
+        run: |
+          sudo -u postgres psql -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
+        # このステップはpostgresサービスが起動した後に行う必要があります
+
       - name: Run tests
         env:
           RAILS_ENV: test
-          # DATABASE_URL を直接指定して接続情報を強制します。
-          # これにより database.yml の設定は無視されます。
-          DATABASE_URL: "postgis://rails:password@localhost:5432/transportation_test"
+          # 接続情報をDATABASE_URLで引き続き指定します
+          DATABASE_URL: "postgis://root:password@localhost:5432/transportation_test"
         run: |
           bin/rails db:prepare
           bin/rails test
