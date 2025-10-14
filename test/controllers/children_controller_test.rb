@@ -17,7 +17,7 @@ class ChildrenControllerTest < ActionDispatch::IntegrationTest
       post user_children_url(@user), params: { child: {
         # user_id はURLから取得されるため、通常は不要です
         grade: 1,
-        school_type: "0"
+        school_type: "elementary"
         # school_name や postcode など、他の属性も必要に応じて追加
       } }
     end
