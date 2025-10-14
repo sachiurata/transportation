@@ -85,8 +85,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      # 'root'ユーザーを作成するステップを修正します
       - name: Create root role in PostgreSQL
+        # PGPASSWORD環境変数でpostgresユーザーのパスワードを指定します
+        env:
+          PGPASSWORD: password
         run: psql -h localhost -U postgres -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
 
       - name: Run tests
