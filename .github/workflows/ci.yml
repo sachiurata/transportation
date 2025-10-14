@@ -85,11 +85,9 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      # このステップを追加して、'root'ユーザーを強制的に作成します
+      # 'root'ユーザーを作成するステップを修正します
       - name: Create root role in PostgreSQL
-        run: |
-          sudo -u postgres psql -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
-        # このステップはpostgresサービスが起動した後に行う必要があります
+        run: psql -h localhost -U postgres -c "CREATE USER root WITH SUPERUSER PASSWORD 'password';"
 
       - name: Run tests
         env:
