@@ -22,10 +22,9 @@ test:
   host: localhost
   username: rails
   password: password
-  port: 5432
 
 production:
   <<: *default
-  database: transportation_production
-  username: <%= ENV.fetch("POSTGRES_USER") %>
-  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  # 本番環境では DATABASE_URL 環境変数を使用するのが一般的です。
+  # これにより、CI環境で不要な環境変数を探してエラーになることを防ぎます。
+  url: <%= ENV["DATABASE_URL"] %>
