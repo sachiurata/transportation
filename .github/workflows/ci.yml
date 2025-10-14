@@ -56,6 +56,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    # ジョブ全体で環境変数を設定し、GitHub Actionsによる自動設定を上書きします。
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgis://rails:password@localhost:5432/transportation_test"
+
     services:
       postgres:
         image: postgis/postgis:14-3.4
@@ -85,11 +90,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      # 'Run tests'ステップ内のenvブロックは不要になったため削除します。
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          # 接続ユーザーを 'root' から 'rails' に修正します
-          DATABASE_URL: "postgis://rails:password@localhost:5432/transportation_test"
         run: |
           bin/rails db:prepare
           bin/rails test
