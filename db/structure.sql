@@ -19,14 +19,14 @@ CREATE SCHEMA IF NOT EXISTS tiger;
 -- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA tiger_data;
+CREATE SCHEMA IF NOT EXISTS tiger_data;
 
 
 --
 -- Name: topology; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA topology;
+CREATE SCHEMA IF NOT EXISTS topology;
 
 
 --
