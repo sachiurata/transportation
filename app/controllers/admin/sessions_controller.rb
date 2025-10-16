@@ -1,6 +1,6 @@
 class Admin::SessionsController < Admin::BaseController
   # このコントローラーではログインチェックをスキップする
-  skip_before_action :require_admin_login, only: [:new, :create]
+  skip_before_action :require_admin_login, only: [ :new, :create ]
 
   def new
   end
