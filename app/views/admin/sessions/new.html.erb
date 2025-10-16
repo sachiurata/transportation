@@ -1,2 +1,24 @@
-<h1>Admin::Sessions#new</h1>
-<p>Find me in app/views/admin/sessions/new.html.erb</p>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="card-title text-center mb-4">管理者ログイン</h1>
+        <%= form_with(scope: :session, url: admin_session_path, local: true) do |f| %>
+          <div class="mb-3">
+            <%= f.label :user_name, "ユーザー名", class: "form-label" %>
+            <%= f.text_field :user_name, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, "パスワード", class: "form-label" %>
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+
+          <div class="d-grid">
+            <%= f.submit "ログイン", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

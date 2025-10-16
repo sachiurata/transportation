@@ -15,7 +15,8 @@ Rails.application.routes.draw do
 
   # 管理者用
   namespace :admin do
-    resource :session, only: [ :new, :create, :destroy ]
+    get "login", to: "sessions#new"
+    resource :session, only: [ :create, :destroy ]
     root "dashboards#top"
     get "dashboards/heatmap", to: "dashboards#heatmap"
   end
