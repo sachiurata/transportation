@@ -17,10 +17,6 @@
     "CAPYBARA_SERVER_PORT": "45678",
     "SELENIUM_HOST": "selenium",
     "KAMAL_REGISTRY_PASSWORD": "$KAMAL_REGISTRY_PASSWORD",
-    
-    "POSTGRES_HOST": "db",
-    "POSTGRES_USER": "vscode",
-    "POSTGRES_PASSWORD": "password",
     "GOOGLE_MAP_API_KEY": "AIzaSyAuarhNbt7Fjg7h_Z-DTY4ofkIHDhNg2dg"
   },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
