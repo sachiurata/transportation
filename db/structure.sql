@@ -13,8 +13,7 @@ SET row_security = off;
 -- Name: tiger; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA tiger;
-
+CREATE SCHEMA IF NOT EXISTS tiger;
 
 --
 -- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: -
