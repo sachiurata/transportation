@@ -4,7 +4,10 @@ erDiagram
     USERS ||--o{ CHILDREN : "has"
     CHILDREN ||--o{ REQUESTED_ROUTES : "registers"
     CHILDREN ||--o{ ANSWERS : "has"
-    REQUESTED_ROUTES ||--|{ REQUESTED_TIMES : "has"
+    REQUESTED_ROUTES ||--o{ REQUESTED_TIMES : "has"
+    ADMIN_USERS ||--o{ SURVEYS : "has"
+    SURVEYS ||--o{ QUESTIONS : "has"
+    SURVEYS ||--o{ REQUESTED_ROUTES : "has"
     QUESTIONS ||--o{ QUESTION_OPTIONS : "has"
     QUESTIONS ||--o{ ANSWERS : "is answered in"
     ANSWERS ||--o{ ANSWER_OPTIONS : "has selected"
@@ -12,8 +15,9 @@ erDiagram
 
     ADMIN_USERS {
         int id PK
-        string email "NOT NULL"
+        string user_name "NOT NULL"
         string password_digest "NOT NULL"
+        string role "NOT NULL, enum"
         datetime created_at
         datetime updated_at
     }
@@ -41,7 +45,7 @@ erDiagram
         string postcode
         string school_name
         int grade "NOT NULL"
-        enum school_type "NOT NULL, elementary, secondary, high"
+        int school_type "NOT NULL, enum, elementary, secondary, high"
         datetime created_at
         datetime updated_at
     }
@@ -49,13 +53,14 @@ erDiagram
     REQUESTED_ROUTES {
         int id PK "NOT NULL"
         int subject_id FK "NOT NULL"
+        int survey_id FK "NOT NULL"
         string subject_type "NOT NULL, 'Child'など"
         string start_point_name "出発地名"
         geometry start_point_location "NOT NULL, 出発地点"
         string end_point_name "目的地名"
         geometry end_point_location "NOT NULL, 目的地点"
         string purpose "通学,部活,習い事など"
-        text comment 
+        text route_comment
         boolean is_existing_service_available "NOT NULL"
         datetime created_at
         datetime updated_at
@@ -71,10 +76,16 @@ erDiagram
        datetime updated_at
     }
 
+    SURVEYS {
+        int id PK "NOT NULL"
+        int admin_user_id FK "NOT NULL"
+        string survey_name "NOT NULL"
+    }
+
     QUESTIONS {
         int id PK "NOT NULL"
         text text "NOT NULL, 質問文"
-        enum question_type "NOT NULL, multiple_choice free_text, multiple_choice_and_free_text"
+        int question_type "NOT NULL, multiple_choice free_text, multiple_choice_and_free_text"
         int display_order "NOT NULL, 表示順"
         datetime created_at
         datetime updated_at

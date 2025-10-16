@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -8,6 +9,48 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: tiger; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA tiger;
+
+
+--
+-- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA tiger_data;
+
+
+--
+-- Name: topology; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA topology;
+
+
+--
+-- Name: SCHEMA topology; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA topology IS 'PostGIS Topology schema';
+
+
+--
+-- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
+
 
 --
 -- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
@@ -23,6 +66,34 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
 
 
+--
+-- Name: postgis_tiger_geocoder; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder WITH SCHEMA tiger;
+
+
+--
+-- Name: EXTENSION postgis_tiger_geocoder; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION postgis_tiger_geocoder IS 'PostGIS tiger geocoder and reverse geocoder';
+
+
+--
+-- Name: postgis_topology; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis_topology WITH SCHEMA topology;
+
+
+--
+-- Name: EXTENSION postgis_topology; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION postgis_topology IS 'PostGIS topology spatial types and functions';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -33,7 +104,7 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.admin_users (
     id bigint NOT NULL,
-    email character varying NOT NULL,
+    user_name character varying NOT NULL,
     password_digest character varying NOT NULL,
     role integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -311,7 +382,8 @@ CREATE TABLE public.requested_routes (
     comment text,
     is_existing_service_available boolean NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    survey_id bigint NOT NULL
 );
 
 
@@ -431,6 +503,38 @@ ALTER SEQUENCE public.requested_times_id_seq OWNED BY public.requested_times.id;
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: surveys; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.surveys (
+    id bigint NOT NULL,
+    admin_user_id bigint NOT NULL,
+    survey_name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: surveys_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.surveys_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: surveys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.surveys_id_seq OWNED BY public.surveys.id;
 
 
 --
@@ -562,6 +666,13 @@ ALTER TABLE ONLY public.requested_times ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: surveys id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.surveys ALTER COLUMN id SET DEFAULT nextval('public.surveys_id_seq'::regclass);
+
+
+--
 -- Name: user_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -656,6 +767,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: surveys surveys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT surveys_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -672,10 +791,10 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: index_admin_users_on_email; Type: INDEX; Schema: public; Owner: -
+-- Name: index_admin_users_on_user_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree (email);
+CREATE UNIQUE INDEX index_admin_users_on_user_name ON public.admin_users USING btree (user_name);
 
 
 --
@@ -728,10 +847,24 @@ CREATE INDEX index_requested_routes_on_subject ON public.requested_routes USING 
 
 
 --
+-- Name: index_requested_routes_on_survey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_requested_routes_on_survey_id ON public.requested_routes USING btree (survey_id);
+
+
+--
 -- Name: index_requested_times_on_requested_route_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_requested_times_on_requested_route_id ON public.requested_times USING btree (requested_route_id);
+
+
+--
+-- Name: index_surveys_on_admin_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_surveys_on_admin_user_id ON public.surveys USING btree (admin_user_id);
 
 
 --
@@ -798,12 +931,31 @@ ALTER TABLE ONLY public.answer_options
 
 
 --
+-- Name: surveys fk_rails_df5d515ccb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT fk_rails_df5d515ccb FOREIGN KEY (admin_user_id) REFERENCES public.admin_users(id);
+
+
+--
+-- Name: requested_routes fk_rails_f315e5e539; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.requested_routes
+    ADD CONSTRAINT fk_rails_f315e5e539 FOREIGN KEY (survey_id) REFERENCES public.surveys(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user", public;
+SET search_path TO "$user", public, topology, tiger;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251015082350'),
+('20251015081523'),
+('20251015075319'),
 ('20251009080532'),
 ('20251009050239'),
 ('20251009050153'),

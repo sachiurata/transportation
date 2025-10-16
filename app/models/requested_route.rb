@@ -1,5 +1,6 @@
 class RequestedRoute < ApplicationRecord
   belongs_to :subject, polymorphic: true
+  belongs_to :survey
   has_many :requested_times, dependent: :destroy
   accepts_nested_attributes_for :requested_times, allow_destroy: true
 
