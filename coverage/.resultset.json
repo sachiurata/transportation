@@ -111,240 +111,368 @@
           null
         ]
       },
-      "/workspaces/transportation/app/controllers/admin/base_controller.rb": {
+      "/workspaces/transportation/app/controllers/children_controller.rb": {
         "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
           0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
           0,
           0,
           null,
           0,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
           null,
           null,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/dashboards_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
+          1,
           null,
-          0,
+          1,
+          2,
+          null,
+          null,
+          1,
           0,
           null,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/questions_controller.rb": {
-        "lines": [
-          0,
-          0,
+          1,
+          1,
           null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/sessions_controller.rb": {
-        "lines": [
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/surveys_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
+          null
+        ]
       },
       "/workspaces/transportation/app/controllers/application_controller.rb": {
         "lines": [
-          0,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          1,
           0,
           null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
+          null
+        ]
       },
-      "/workspaces/transportation/app/controllers/children_controller.rb": {
+      "/workspaces/transportation/app/helpers/application_helper.rb": {
         "lines": [
-          0,
-          0,
-          0,
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/dashboards_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/questions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/sessions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/surveys_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/children_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/requested_routes_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/sessions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/static_pages_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/users_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/models/child.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/models/user_profile.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/sessions_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          13,
+          13,
+          12,
+          12,
+          12,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/base_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          12,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          14,
+          null,
+          null,
+          null,
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/surveys_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
           null,
           0,
           0,
-          0,
-          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/models/answer_option.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/static_pages_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/questions_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          11,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
           null,
           0,
           0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           null,
-          0,
-          0,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           null,
-          0,
+          1,
           null,
-          0,
-          0,
-          0,
+          1,
+          3,
           null,
-          0,
-          0,
-          0,
           null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/dashboards_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
       },
       "/workspaces/transportation/app/controllers/requested_routes_controller.rb": {
         "lines": [
@@ -428,15 +556,6 @@
         ],
         "branches": {}
       },
-      "/workspaces/transportation/app/controllers/static_pages_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/workspaces/transportation/app/controllers/users_controller.rb": {
         "lines": [
           0,
@@ -479,76 +598,6 @@
         ],
         "branches": {}
       },
-      "/workspaces/transportation/app/helpers/admin/dashboards_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/questions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/sessions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/surveys_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/application_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/children_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/requested_routes_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/sessions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/static_pages_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/users_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/workspaces/transportation/app/jobs/application_job.rb": {
         "lines": [
           0,
@@ -569,79 +618,9 @@
           0
         ],
         "branches": {}
-      },
-      "/workspaces/transportation/app/models/answer_option.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/models/child.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/models/user_profile.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {}
       }
     },
-    "timestamp": 1760739067
+    "timestamp": 1760741253
   },
   "Unit Tests": {
     "coverage": {
@@ -755,38 +734,185 @@
           null
         ]
       },
-      "/workspaces/transportation/app/models/answer_option.rb": {
+      "/workspaces/transportation/app/controllers/admin/sessions_controller.rb": {
         "lines": [
           1,
+          null,
           1,
+          null,
           1,
+          null,
+          null,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
           null
         ]
       },
       "/workspaces/transportation/app/controllers/admin/base_controller.rb": {
         "lines": [
-          0,
-          0,
-          0,
+          1,
+          1,
+          1,
           null,
-          0,
+          1,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
+          1,
+          3,
           0,
           0,
           null,
           null,
+          null,
+          1,
+          3,
+          null,
+          null,
+          null,
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
           0,
-          0
-        ],
-        "branches": {}
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/dashboards_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/questions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/sessions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/admin/surveys_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/children_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/requested_routes_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/sessions_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/static_pages_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/helpers/users_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/workspaces/transportation/app/controllers/admin/questions_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          11,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          3,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
       },
       "/workspaces/transportation/app/controllers/admin/dashboards_controller.rb": {
         "lines": [
@@ -804,83 +930,6 @@
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/questions_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/admin/sessions_controller.rb": {
-        "lines": [
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
           0,
           0,
           0,
@@ -918,28 +967,6 @@
           0,
           0,
           null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/controllers/application_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
           0,
           null,
           0,
@@ -1131,76 +1158,6 @@
         ],
         "branches": {}
       },
-      "/workspaces/transportation/app/helpers/admin/dashboards_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/questions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/sessions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/admin/surveys_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/application_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/children_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/requested_routes_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/sessions_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/static_pages_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/workspaces/transportation/app/helpers/users_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/workspaces/transportation/app/jobs/application_job.rb": {
         "lines": [
           0,
@@ -1214,6 +1171,15 @@
         "branches": {}
       },
       "/workspaces/transportation/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/workspaces/transportation/app/models/answer_option.rb": {
         "lines": [
           0,
           0,
@@ -1284,6 +1250,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1760739695
+    "timestamp": 1760741230
   }
 }
