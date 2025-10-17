@@ -1,0 +1,61 @@
+<h1 class="h2">質問編集</h1>
+<h2 class="h4 text-muted mb-4">アンケート: <%= @survey.survey_name %></h2>
+
+<%= form_with model: [:admin, @survey, @question], local: true do |f| %>
+  <% if @question.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @question.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="mb-3">
+        <%= f.label :text, "質問内容", class: "form-label" %>
+        <%= f.text_area :text, rows: 3, class: "form-control", autofocus: true %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="mb-3">
+        <%= f.label :question_type, "質問形式", class: "form-label" %>
+        <%= f.select :question_type, Question.question_types.keys.map { |k| [t("enums.question.question_type.#{k}"), k] }, {}, class: "form-select", data: { controller: "toggle", action: "toggle#toggleOptions" } %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :display_order, "表示順 (任意)", class: "form-label" %>
+        <%= f.number_field :display_order, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 選択式のquestion_typeが選ばれたときだけ表示する予定（現在は常に表示） -->
+  <div class="card mt-3" id="question-options-container" data-toggle-target="options">
+    <div class="card-header">
+      選択肢の編集
+    </div>
+    <div class="card-body">
+      <p class="text-muted small">選択肢を入力してください。空欄のものは保存されません。</p>
+      <%= f.fields_for :question_options do |option_form| %>
+        <div class="input-group mb-2">
+          <span class="input-group-text">・</span>
+          <%= option_form.text_field :text, class: "form-control", placeholder: "選択肢のテキスト" %>
+          <%# 既存の選択肢を削除するためのチェックボックス %>
+          <% if option_form.object.persisted? %>
+            <div class="input-group-text">
+              <%= option_form.check_box :_destroy %>
+              <%= option_form.label :_destroy, "削除", class: "ms-2" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-4">
+    <%= f.submit "この内容で質問を更新する", class: "btn btn-primary" %>
+    <%= link_to "質問管理ページに戻る", admin_survey_questions_path(@survey), class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

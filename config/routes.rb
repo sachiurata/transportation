@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
     # アンケートと質問のルーティングを追加
     resources :surveys, only: [ :index, :new, :create, :show ] do
-      resources :questions, only: [ :index, :new, :create ]
+      resources :questions
     end
   end
 

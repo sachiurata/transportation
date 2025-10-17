@@ -36,4 +36,26 @@ class Admin::QuestionsControllerTest < ActionDispatch::IntegrationTest
     # 作成後は、続けて質問を追加できるよう、新規作成ページにリダイレクトされることを確認
     assert_redirected_to new_admin_survey_question_url(@survey)
   end
+  test "should get edit" do
+    question = questions(:one) # フィクスチャから既存の質問を取得
+    get edit_admin_survey_question_url(@survey, question)
+    assert_response :success
+  end
+
+  test "should update question" do
+    question = questions(:one)
+    patch admin_survey_question_url(@survey, question), params: { question: { text: "更新された質問文" } }
+    assert_redirected_to admin_survey_questions_url(@survey)
+    # データベースの値が実際に更新されたかを確認
+    question.reload
+    assert_equal "更新された質問文", question.text
+  end
+
+  test "should destroy question" do
+    question = questions(:one)
+    assert_difference("Question.count", -1) do
+      delete admin_survey_question_url(@survey, question)
+    end
+    assert_redirected_to admin_survey_questions_url(@survey)
+  end
 end
