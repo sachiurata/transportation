@@ -28,12 +28,12 @@ class Admin::QuestionsControllerTest < ActionDispatch::IntegrationTest
       post admin_survey_questions_url(@survey), params: {
         question: {
           text: "新しい質問",
-          question_type: "free_text" # または 1
+          question_type: "free_text" # 整数 1 を文字列 "free_text" に修正
         }
       }
     end
 
-    # 作成後は、そのアンケートの質問一覧ページにリダイレクトされることを確認
-    assert_redirected_to admin_survey_questions_url(@survey)
+    # 作成後は、続けて質問を追加できるよう、新規作成ページにリダイレクトされることを確認
+    assert_redirected_to new_admin_survey_question_url(@survey)
   end
 end
