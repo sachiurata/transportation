@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     resource :session, only: [ :create, :destroy ]
     root "dashboards#top"
     get "dashboards/heatmap", to: "dashboards#heatmap"
+
+    # アンケートと質問のルーティングを追加
+    resources :surveys, only: [ :index, :new, :create, :show ] do
+      resources :questions, only: [ :index, :new, :create ]
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

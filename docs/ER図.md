@@ -84,9 +84,10 @@ erDiagram
 
     QUESTIONS {
         int id PK "NOT NULL"
+        int survey_id FK "NOT NULL"
         text text "NOT NULL, 質問文"
         int question_type "NOT NULL, multiple_choice free_text, multiple_choice_and_free_text"
-        int display_order "NOT NULL, 表示順"
+        int display_order "表示順"
         datetime created_at
         datetime updated_at
     }

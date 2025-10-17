@@ -15,6 +15,7 @@ SET row_security = off;
 
 CREATE SCHEMA IF NOT EXISTS tiger;
 
+
 --
 -- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: -
 --
@@ -271,7 +272,7 @@ CREATE TABLE public.question_options (
     id bigint NOT NULL,
     question_id bigint NOT NULL,
     text character varying NOT NULL,
-    display_order integer NOT NULL,
+    display_order integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -318,9 +319,10 @@ CREATE TABLE public.questions (
     id bigint NOT NULL,
     text text NOT NULL,
     question_type integer NOT NULL,
-    display_order integer NOT NULL,
+    display_order integer,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    survey_id bigint NOT NULL
 );
 
 
@@ -838,6 +840,13 @@ CREATE INDEX index_question_options_on_question_id ON public.question_options US
 
 
 --
+-- Name: index_questions_on_survey_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_questions_on_survey_id ON public.questions USING btree (survey_id);
+
+
+--
 -- Name: index_requested_routes_on_subject; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -870,6 +879,14 @@ CREATE INDEX index_surveys_on_admin_user_id ON public.surveys USING btree (admin
 --
 
 CREATE UNIQUE INDEX index_user_profiles_on_user_id ON public.user_profiles USING btree (user_id);
+
+
+--
+-- Name: questions fk_rails_15f8f0ec98; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.questions
+    ADD CONSTRAINT fk_rails_15f8f0ec98 FOREIGN KEY (survey_id) REFERENCES public.surveys(id);
 
 
 --
@@ -951,6 +968,9 @@ ALTER TABLE ONLY public.requested_routes
 SET search_path TO "$user", public, topology, tiger;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251016083324'),
+('20251016081906'),
+('20251016073920'),
 ('20251015082350'),
 ('20251015081523'),
 ('20251015075319'),

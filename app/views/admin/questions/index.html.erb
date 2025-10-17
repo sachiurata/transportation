@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">質問管理: <%= @survey.survey_name %></h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "新規質問作成", new_admin_survey_question_path(@survey), class: "btn btn-sm btn-primary" %>
+  </div>
+</div>
+
+<h3 class="h4">登録済み質問一覧</h3>
+<% if @questions.any? %>
+  <ul class="list-group">
+    <% @questions.each do |question| %>
+      <li class="list-group-item"><%= question.text %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ質問は登録されていません。</p>
+<% end %>
+
+<div class="mt-4">
+  <%= link_to "アンケート一覧に戻る", admin_surveys_path, class: "btn btn-secondary" %>
+</div>

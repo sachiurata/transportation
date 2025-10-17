@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: "普段、最もよく利用する交通手段を1つだけ選んでください。"
+  question_type: 0 # "multiple_choice" から 0 に変更
+  display_order: 1
+  survey: one
+
+two:
+  text: "交通サービスの改善してほしい点は何ですか？（複数選択可）"
+  question_type: 0 # "multiple_choice" から 0 に変更
+  display_order: 2
+  survey: one
+
+three:
+  text: "その他、交通サービスに関するご意見・ご要望があれば自由にご記入ください。"
+  question_type: 1 # "free_text" から 1 に変更
+  display_order: 3
+  survey: one

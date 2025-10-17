@@ -1,0 +1,9 @@
+<h1 class="h2">新規調査作成</h1>
+
+<%= form_with model: [:admin, @survey], local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :survey_name, "調査名", class: "form-label" %>
+    <%= f.text_field :survey_name, class: "form-control" %>
+  </div>
+  <%= f.submit "作成する", class: "btn btn-primary" %>
+<% end %>

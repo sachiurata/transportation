@@ -1,0 +1,7 @@
+ja:
+  enums:
+    question:
+      question_type:
+        multiple_choice: "選択式"
+        free_text: "自由記述"
+        multiple_choice_and_free_text: "選択式 + 自由記述"

@@ -1,0 +1,32 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# --- 質問 one (例: 好きな交通手段は？) の選択肢 ---
+q1_option_one:
+  text: "電車"
+  question: one
+
+q1_option_two:
+  text: "バス"
+  question: one
+
+q1_option_three:
+  text: "自転車"
+  question: one
+
+q1_option_four:
+  text: "徒歩"
+  question: one
+
+
+# --- 質問 two (例: 改善してほしい点は？) の選択肢 ---
+q2_option_one:
+  text: "運賃"
+  question: two
+
+q2_option_two:
+  text: "本数"
+  question: two
+
+q2_option_three:
+  text: "混雑"
+  question: two

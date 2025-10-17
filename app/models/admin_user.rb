@@ -1,4 +1,7 @@
 class AdminUser < ApplicationRecord
+  has_many :surveys, dependent: :destroy
+
+  accepts_nested_attributes_for :surveys, allow_destroy: true
   # パスワードを安全に保存するための機能
   has_secure_password
 
