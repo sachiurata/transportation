@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  survey_name: "第一回アンケート"
+  admin_user: one
+ # admin_users.yml の "one" を参照
+
+two:
+  survey_name: "第二回アンケート"
+  admin_user: one # admin_users.yml の "one" を参照

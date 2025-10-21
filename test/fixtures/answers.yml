@@ -1,0 +1,11 @@
+# # 質問 one (選択式) への回答
+# answer_one:
+#   user: users(:one) # users.yml の :one を参照
+#   question: questions(:one) # questions.yml の :one を参照
+#   question_option: question_options(:q1_option_two) # question_options.yml の :q1_option_two (バス) を選択
+
+# # 質問 three (自由記述) への回答
+# answer_two:
+#   user: users(:one) # users.yml の :one を参照
+#   question: questions(:three) # questions.yml の :three を参照
+#   text: "バスの本数を増やしてほしいです。特に週末。"

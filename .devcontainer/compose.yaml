@@ -5,9 +5,11 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+    env_file:
+      - .env
 
     volumes:
-    - ../..:/workspaces:cached
+      - ../..:/workspaces:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -18,14 +20,8 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
     depends_on:
-    - selenium
-    - db
-
-    environment:
-      POSTGRES_HOST: db
-      POSTGRES_USER: vscode
-      POSTGRES_PASSWORD: password
-      POSTGRES_NAME: transportation_development
+      - selenium
+      - db
 
 
   selenium:
@@ -33,13 +29,10 @@ services:
     restart: unless-stopped
 
   db:
-    image: postgis/postgis:15-3.4 
+    image: postgis/postgis:15-3.4
     restart: unless-stopped
-    environment:
-      POSTGRES_HOST: db
-      POSTGRES_USER: vscode
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: transportation_development
+    env_file:
+      - .env
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:

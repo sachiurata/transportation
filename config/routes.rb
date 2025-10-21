@@ -15,9 +15,15 @@ Rails.application.routes.draw do
 
   # 管理者用
   namespace :admin do
-    resource :session, only: [ :new, :create, :destroy ]
+    get "login", to: "sessions#new"
+    resource :session, only: [ :create, :destroy ]
     root "dashboards#top"
     get "dashboards/heatmap", to: "dashboards#heatmap"
+
+    # アンケートと質問のルーティングを追加
+    resources :surveys, only: [ :index, :new, :create, :show ] do
+      resources :questions
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

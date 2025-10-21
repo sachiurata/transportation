@@ -1,0 +1,29 @@
+<h1 class="h2 border-bottom pb-2 mb-3"><%= @survey.survey_name %></h1>
+
+<%# --- 質問追加フォーム --- %>
+<div class="card mb-4">
+  <div class="card-header">
+    新しい質問を追加
+  </div>
+  <div class="card-body">
+    <%= form_with model: [:admin, @survey, @question], local: true do |f| %>
+      <div class="mb-3">
+        <%= f.label :text, "質問内容", class: "form-label" %>
+        <%= f.text_area :text, rows: 3, class: "form-control" %>
+      </div>
+      <%= f.submit "質問を追加する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<%# --- 登録済み質問一覧 --- %>
+<h3 class="h4">登録済み質問一覧</h3>
+<% if @questions.any? %>
+  <ul class="list-group">
+    <% @questions.each do |question| %>
+      <li class="list-group-item"><%= question.text %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだ質問は登録されていません。</p>
+<% end %>

@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
 
 jobs:
   scan_ruby:
@@ -65,7 +64,6 @@ jobs:
       postgres:
         image: postgis/postgis:14-3.4
         env:
-          # railsユーザーとpasswordも引き続き設定しておきます
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
           POSTGRES_DB: transportation_test
@@ -90,7 +88,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      # 'Run tests'ステップ内のenvブロックは不要になったため削除します。
       - name: Run tests
         run: |
           bin/rails db:prepare
