@@ -33,7 +33,7 @@ class QuestionOptionTest < ActiveSupport::TestCase
     assert_not_empty option_with_answer.answers
 
     # 選択肢を削除し、関連する回答も削除されることを確認
-    assert_difference("Answer.count", -1) do
+    assert_difference("AnswerOption.count", -1) do
       option_with_answer.destroy
     end
   end

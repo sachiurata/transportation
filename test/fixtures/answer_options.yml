@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# answer_q1_child1 が q1_option_two (バス) を選択したことを示す
+ao_q1_child1:
+  answer: answer_q1_child1
+  question_option: q1_option_two
+
+# answer_q1_child2 が q1_option_one (徒歩) を選択したことを示す
+ao_q1_child2:
+  answer: answer_q1_child2
+  question_option: q1_option_one

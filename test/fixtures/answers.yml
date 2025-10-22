@@ -1,11 +1,21 @@
-# # 質問 one (選択式) への回答
-# answer_one:
-#   user: users(:one) # users.yml の :one を参照
-#   question: questions(:one) # questions.yml の :one を参照
-#   question_option: question_options(:q1_option_two) # question_options.yml の :q1_option_two (バス) を選択
+# --- child_one_for_user_one の回答 ---
 
-# # 質問 three (自由記述) への回答
-# answer_two:
-#   user: users(:one) # users.yml の :one を参照
-#   question: questions(:three) # questions.yml の :three を参照
-#   text: "バスの本数を増やしてほしいです。特に週末。"
+# 質問 one (択一選択) への回答
+answer_q1_child1:
+  subject: child_one_for_user_one (Child)
+  question: one
+  # 選択肢は answer_options.yml で指定
+
+# 質問 three (自由記述) への回答
+answer_q3_child1:
+  subject: child_one_for_user_one (Child)
+  question: three
+  free_text: "バスの本数を増やしてほしいです。特に週末。"
+
+# --- child_two_for_user_one の回答 ---
+
+# 質問 one (択一選択) への回答
+answer_q1_child2:
+  subject: child_two_for_user_one (Child)
+  question: one
+  # 選択肢は answer_options.yml で指定
