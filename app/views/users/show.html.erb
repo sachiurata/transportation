@@ -29,7 +29,7 @@
                 <%= link_to "編集", edit_user_child_path(@user, child), class: "btn btn-secondary btn-sm" %>
               </div>
               <div class="mt-2">
-                <%= link_to "アンケートに回答する", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm" %>
+                <%= link_to "アンケートに回答する", new_answer_path(child_id: child.id), class: "btn btn-success btn-sm" %>
               </div>
               <div class="mt-2">
                 <%= link_to "移動経路の登録", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm" %>

@@ -14,3 +14,18 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+Rails.application.config.to_prepare do
+  # 質問形式の日本語化
+  I18n.backend.store_translations(:ja, {
+    enums: {
+      question: {
+        question_type: {
+          multiple_choice: "択一選択",
+          free_text: "自由記述",
+          multiple_choice_and_free_text: "択一選択と自由記述"
+        }
+      }
+    }
+  })
+end

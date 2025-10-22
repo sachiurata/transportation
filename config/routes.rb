@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "answers/new"
+  get "answers/create"
   # 静的ページ
   root "static_pages#top"
 
@@ -7,6 +9,9 @@ Rails.application.routes.draw do
     resources :children, only: [ :new, :create, :edit, :update ]
   end
   resource :session, only: [ :new, :create, :destroy ]
+
+  # アンケート回答
+  resources :answers, only: [ :new, :create ]
 
   # 移動希望（リクエスト）
   resources :requested_routes, controller: "requested_routes", path: "requests" do
