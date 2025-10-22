@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h1>マイページ</h1>
+  <h1>アンケートトップ</h1>
 
   <div class="card mb-4">
     <div class="card-header">
@@ -17,16 +17,22 @@
       お子さん情報
     </div>
     <div class="card-body">
+      <p>調査対象となるお子さんの情報を登録し、個々のお子さんについてアンケートにお答えください。</p>
       <% if @user.children.any? %>
         <ul class="list-group">
           <% @user.children.each_with_index do |child, index| %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <%= (index + 1).to_s + "人目のお子さん: " + child.school_name + " " + child.grade.to_s + "年" %>
-              </div>
-              <div>
-                <%= link_to "経路登録", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm me-2" %>
+            <li class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  <strong><%= "[" + (index + 1).to_s + "] " + child.school_name + " " + child.grade.to_s + "年" %></strong>
+                </span>
                 <%= link_to "編集", edit_user_child_path(@user, child), class: "btn btn-secondary btn-sm" %>
+              </div>
+              <div class="mt-2">
+                <%= link_to "アンケートに回答する", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm" %>
+              </div>
+              <div class="mt-2">
+                <%= link_to "移動経路の登録", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm" %>
               </div>
             </li>
           <% end %>
