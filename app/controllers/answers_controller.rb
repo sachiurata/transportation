@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
     ActiveRecord::Base.transaction do
       answers_params.each do |question_id, answer_data|
         # 質問ごとにAnswerレコードを作成
-        answer = @child.answers.create!(question_id: question_id, free_text: answer_data[:text])
+        answer = @child.answers.create!(question_id: question_id, free_text: answer_data[:free_text])
 
         # 選択肢がある場合は、AnswerOptionも作成
         if answer_data[:question_option_ids].present?
@@ -42,7 +42,14 @@ class AnswersController < ApplicationController
   end
 
   def answers_params
-    # パラメータの形式: params.require(:answers).permit("1" => [:text, question_option_ids: []], "2" => ...)
-    params.require(:answers).permit! # 簡単のためpermit!を使用。本番では要件に応じて厳密に設定。
+    # パラメータのキー（質問ID）を全て取得する
+    question_ids = params.require(:answers).keys
+
+    # 取得したキーを元に、許可する属性のリストを動的に組み立てる
+    permitted_keys = question_ids.map do |id|
+      [ id, [ :free_text, { question_option_ids: [] } ] ]
+    end.to_h
+
+    params.require(:answers).permit(permitted_keys)
   end
 end
