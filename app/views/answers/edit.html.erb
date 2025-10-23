@@ -1,0 +1,61 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="h3 mb-3">アンケート回答の編集</h1>
+      <p class="lead">お子さん: <%= @child.school_name %> <%= @child.grade %>年</p>
+      <p class="text-muted"><%= @survey.survey_name %></p>
+
+      <hr>
+
+      <%= form_with url: answer_path(child_id: @child.id), method: :patch, local: true do |f| %>
+        <%= f.hidden_field :child_id, value: @child.id %>
+
+        <% @questions.each do |question| %>
+          <div class="card mb-4">
+            <div class="card-header">
+              <strong>質問 <%= question.display_order %></strong>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><%= question.text %></p>
+
+              <%
+                # この質問に対する既存の回答を取得
+                answer = @existing_answers[question.id]&.first
+                # 既存の回答でチェックされている選択肢のIDリストを取得
+                checked_option_ids = answer&.answer_options&.map(&:question_option_id) || []
+              %>
+
+              <%= fields_for "answers[#{question.id}]" do |answer_fields| %>
+
+                <% if question.multiple_choice? || question.multiple_choice_and_free_text? %>
+                  <div class="mb-3">
+                    <% question.question_options.each do |option| %>
+                      <div class="form-check">
+                        <%# checked_option_ids に含まれていればチェック済みにする %>
+                        <%= check_box_tag "answers[#{question.id}][question_option_ids][]", option.id, checked_option_ids.include?(option.id), class: "form-check-input", id: "option_#{option.id}" %>
+                        <%= label_tag "option_#{option.id}", option.text, class: "form-check-label" %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <% if question.free_text? || question.multiple_choice_and_free_text? %>
+                  <div class="mb-2">
+                    <%= answer_fields.label :free_text, "自由記述欄", class: "form-label" %>
+                    <%# 既存の自由記述回答を value に設定 %>
+                    <%= answer_fields.text_area :free_text, value: answer&.free_text, rows: 3, class: "form-control" %>
+                  </div>
+                <% end %>
+
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="d-grid">
+          <%= f.submit "この内容で回答を更新する", class: "btn btn-primary btn-lg" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

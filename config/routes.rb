@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resource :session, only: [ :new, :create, :destroy ]
 
   # アンケート回答
-  resources :answers, only: [ :new, :create ]
+  resources :answers, only: [ :new, :create, :edit, :update ]
 
   # 移動希望（リクエスト）
   resources :requested_routes, controller: "requested_routes", path: "requests" do
