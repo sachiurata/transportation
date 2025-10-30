@@ -36,7 +36,12 @@
                 <% end %>
               </div>
               <div class="mt-2">
-                <%= link_to "移動経路の登録", new_requested_route_path(child_id: child.id), class: "btn btn-success btn-sm" %>
+                <%# 登録済みの経路がある場合に「確認・編集」ボタンを表示 %>
+                <% if child.requested_routes.any? %>
+                  <%= link_to "移動経路の確認・編集", requested_routes_path(subject_id: child.id, subject_type: 'Child'), class: "btn btn-secondary btn-sm" %>
+                <% end %>
+                <%# 「新規登録」ボタンは常に表示 %>
+                <%= link_to "移動経路の登録", new_requested_route_path(subject_id: child.id, subject_type: 'Child'), class: "btn btn-success btn-sm" %>
               </div>
             </li>
           <% end %>

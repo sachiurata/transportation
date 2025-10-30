@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   # 移動希望（リクエスト）
   resources :requested_routes, controller: "requested_routes", path: "requests" do
-    resources :requested_times, only: [ :create ]
+    resources :requested_times, only: [ :create, :destroy ]
   end
 
   # 管理者用

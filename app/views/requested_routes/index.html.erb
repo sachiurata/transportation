@@ -1,2 +1,55 @@
-<h1>RequestedRoutes#index</h1>
-<p>Find me in app/views/requested_routes/index.html.erb</p>
+<div class="container mt-4">
+  <h1 class="h3">移動経路の確認・編集</h1>
+  <p class="lead">お子さん: <%= @subject.school_name %> <%= @subject.grade %>年</p>
+
+  <% @requested_routes.each_with_index do |route, index| %>
+    <%
+      # 地図データを準備
+      route_data = {
+        id: route.id,
+        start_point: { lat: route.start_point_location.y, lng: route.start_point_location.x },
+        end_point: { lat: route.end_point_location.y, lng: route.end_point_location.x },
+        start_name: route.start_point_name,
+        end_name: route.end_point_name
+      }
+    %>
+    <div
+      class="card mb-4"
+      data-controller="map"
+      data-map-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>"
+      data-map-routes-value='<%= [route_data].to_json %>' <%# データを単一要素の配列として渡す %>
+      data-map-start-marker-path-value="<%= asset_path('start_marker.svg') %>"
+      data-map-end-marker-path-value="<%= asset_path('end_marker.svg') %>"
+    >
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <strong>経路 <%= index + 1 %></strong>
+        <div>
+          <%# 編集機能は後ほど追加 %>
+          <%#= link_to "編集", edit_requested_route_path(route), class: "btn btn-secondary btn-sm" %>
+          <%= link_to "削除", requested_route_path(route), data: { turbo_method: :delete, turbo_confirm: "この経路を本当に削除しますか？" }, class: "btn btn-danger btn-sm ms-2" %>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <%# 地図の div には一意の ID を付与する %>
+        <div data-map-target="map" style="height: 400px; width: 100%;"></div>
+      </div>
+      <div class="card-body border-top">
+        <p><strong>希望時間:</strong></p>
+        <% if route.requested_times.any? %>
+          <ul>
+            <% route.requested_times.each do |time| %>
+              <li><%= time.requested_day %> - <%= time.departure_or_arrival %> <%= time.requested_time&.strftime("%H:%M") %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">希望時間の登録はありません。</p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <%= link_to "新しい経路を登録する", new_requested_route_path(subject_id: @subject.id, subject_type: 'Child'), class: "btn btn-primary" %>
+    <%= link_to "アンケートトップに戻る", user_path(current_user), class: "btn btn-outline-secondary" %>
+  </div>
+</div>
