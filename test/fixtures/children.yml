@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+child_one_for_user_one:
+  user: one
+  school_name: "登米小学校"
+  grade: 5
+  school_type: 0 # elementary
+
+child_two_for_user_one:
+  user: one
+  school_name: "登米中学校"
+  grade: 2
+  school_type: 1 # secondary
+
+child_one_for_user_two:
+  user: two
+  school_name: "豊里小学校"
+  grade: 6
+  school_type: 0 # elementary

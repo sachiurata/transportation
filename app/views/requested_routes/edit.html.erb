@@ -1,2 +1,162 @@
-<h1>RequestedRoutes#edit</h1>
-<p>Find me in app/views/requested_routes/edit.html.erb</p>
+<div class="container mt-4"
+  data-controller="form-wizard"
+  data-form-wizard-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>"
+  data-form-wizard-initial-start-location-value="<%= @requested_route.start_point_location %>"
+  data-form-wizard-initial-end-location-value="<%= @requested_route.end_point_location %>"
+>
+  <h1 class="h3">移動経路の編集</h1>
+  <p class="lead">お子さん: <%= @requested_route.subject.school_name %> <%= @requested_route.subject.grade %>年</p>
+
+  <%= form_with model: @requested_route, url: requested_route_path(@requested_route), method: :patch do |f| %>
+    <%# エラー表示 %>
+    <% if f.object.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% f.object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%# --- ステップ1: 出発地 --- %>
+    <div data-form-wizard-target="step">
+      <h4>出発地を選択してください</h4>
+
+      <div class="mb-3">
+        <%= f.label :start_point_name, "出発地の名称", class: "form-label" %>
+        <%= f.select :start_point_name,
+                     options_for_select(['佐沼高等学校', '登米総合産業高等学校', '登米高等学校', '飛鳥未来きずな高等学校', 'その他'], @requested_route.start_point_name),
+                     { prompt: '選択してください' },
+                     class: 'form-select',
+                     data: { action: "change->form-wizard#toggleStartMap" } %>
+      </div>
+
+      <div data-form-wizard-target="startMapContainer" style="<%= 'display: none;' if @requested_route.start_point_name != 'その他' %>">
+        <p>地図上のピンで出発地を指定してください</p>
+        <div data-form-wizard-target="startMap" style="height: 400px; width: 100%;"></div>
+      </div>
+
+      <%= f.hidden_field :start_point_location, data: { form_wizard_target: "startLocation" } %>
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ2: 目的地 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>目的地を選択してください</h4>
+
+      <div class="mb-3">
+        <%= f.label :end_point_name, "目的地の名称", class: "form-label" %>
+        <%= f.select :end_point_name,
+                      options_for_select(['佐沼高等学校', '登米総合産業高等学校', '登米高等学校', '飛鳥未来きずな高等学校', 'その他'], @requested_route.end_point_name),
+                      { prompt: '選択してください' },
+                      class: 'form-select',
+                      data: { action: "change->form-wizard#toggleEndMap" } %>
+      </div>
+
+      <div data-form-wizard-target="endMapContainer" style="<%= 'display: none;' if @requested_route.end_point_name != 'その他' %>">
+        <p>地図上のピンで到着地を指定してください</p>
+        <div data-form-wizard-target="endMap" style="height: 400px; width: 100%;"></div>
+      </div>
+
+      <%= f.hidden_field :end_point_location, data: { form_wizard_target: "endLocation" } %>
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ3: 既存サービスの利用可否 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>既存の路線やダイヤは利用可能ですか？</h4>
+
+      <div class="form-check mb-2">
+        <%= f.radio_button :is_existing_service_available, true, class: "form-check-input", id: "service_available_true" %>
+        <%= f.label :is_existing_service_available, "はい、利用できます", value: true, class: "form-check-label", for: "service_available_true" %>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :is_existing_service_available, false, class: "form-check-input", id: "service_available_false" %>
+        <%= f.label :is_existing_service_available, "いいえ、利用できません", value: false, class: "form-check-label", for: "service_available_false" %>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">次へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ4: 曜日と時間 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>曜日と時間を選択してください</h4>
+
+      <div class="mb-3">
+        <label class="form-label">利用する曜日と時間を指定してください</label>
+
+        <%
+          # 既存の時間を曜日をキーにしたハッシュに変換
+          existing_times = @requested_route.requested_times.index_by(&:requested_day)
+        %>
+
+        <% ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日'].each_with_index do |day, index| %>
+          <%
+            # この曜日に対応する既存のデータを取得
+            time_record = existing_times[day]
+            is_checked = time_record.present?
+          %>
+          <div class="border p-2 mb-2 rounded">
+            <div class="form-check">
+              <input type="checkbox" name="requested_route[requested_times_attributes][<%= index %>][requested_day]" value="<%= day %>" class="form-check-input" id="day_<%= index %>" data-action="change->form-wizard#toggleTimeField" <%= 'checked' if is_checked %>>
+              <label class="form-check-label" for="day_<%= index %>"><%= day %></label>
+            </div>
+
+            <div class="mt-2 <%= 'd-none' unless is_checked %>" data-form-wizard-target="timeFieldContainer">
+              <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="requested_route[requested_times_attributes][<%= index %>][departure_or_arrival]" id="time_type_start_<%= index %>" value="出発" <%= 'checked' if time_record&.departure_or_arrival == '出発' %>>
+                    <label class="form-check-label" for="time_type_start_<%= index %>">出発</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="requested_route[requested_times_attributes][<%= index %>][departure_or_arrival]" id="time_type_end_<%= index %>" value="到着" <%= 'checked' if time_record&.departure_or_arrival == '到着' %>>
+                    <label class="form-check-label" for="time_type_end_<%= index %>">到着</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <input type="time" name="requested_route[requested_times_attributes][<%= index %>][requested_time]" class="form-control" value="<%= time_record&.requested_time&.strftime('%H:%M') %>">
+                </div>
+              </div>
+              <%# 既存レコードのIDを送信して更新対象であることを示す %>
+              <% if time_record %>
+                <input type="hidden" name="requested_route[requested_times_attributes][<%= index %>][id]" value="<%= time_record.id %>">
+              <% end %>
+              <input type="hidden" name="requested_route[requested_times_attributes][<%= index %>][_destroy]" value="<%= is_checked ? '0' : '1' %>" data-form-wizard-target="destroyField">
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">戻る</button>
+        <button type="button" class="btn btn-primary" data-action="click->form-wizard#next">確認へ</button>
+      </div>
+    </div>
+
+    <%# --- ステップ5: 確認画面 --- %>
+    <div data-form-wizard-target="step" class="d-none">
+      <h4>入力内容の確認</h4>
+      <div id="confirmation-summary">
+        <%# ここにJavaScriptで入力内容を表示します %>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" data-action="click->form-wizard#previous">修正する</button>
+        <%= f.submit "この内容で経路を更新する", class: "btn btn-success" %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

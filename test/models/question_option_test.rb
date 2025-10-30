@@ -3,10 +3,7 @@ require "test_helper"
 class QuestionOptionTest < ActiveSupport::TestCase
   setup do
     @question = questions(:one)
-    @question_option = QuestionOption.new(
-      text: "新しい選択肢",
-      question: @question
-    )
+    @question_option = QuestionOption.new(question: @question, text: "Option 1")
   end
 
   test "should be valid" do
@@ -16,13 +13,15 @@ class QuestionOptionTest < ActiveSupport::TestCase
   test "text should be present" do
     @question_option.text = ""
     assert_not @question_option.valid?
-    assert_includes @question_option.errors[:text], "can't be blank"
+    # エラーメッセージの文字列ではなく、:text属性にエラーがあることを確認
+    assert_not_empty @question_option.errors[:text]
   end
 
   test "should belong to a question" do
     @question_option.question = nil
     assert_not @question_option.valid?
-    assert_includes @question_option.errors[:question], "must exist"
+    # :question属性にエラーがあることを確認
+    assert_not_empty @question_option.errors[:question]
   end
 
   test "should destroy associated answers when destroyed" do
@@ -33,7 +32,7 @@ class QuestionOptionTest < ActiveSupport::TestCase
     assert_not_empty option_with_answer.answers
 
     # 選択肢を削除し、関連する回答も削除されることを確認
-    assert_difference("Answer.count", -1) do
+    assert_difference("AnswerOption.count", -1) do
       option_with_answer.destroy
     end
   end

@@ -1,3 +1,31 @@
-<h3><%= link_to "交通需要マップ", admin_dashboards_heatmap_path %></h3>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div>
+        <h1 class="h2 mb-4">登米市の子どもの交通事業に関するアンケート</h1>
+        <p class="lead">本アンケート調査は、登米市における子どもたちの交通に関する実態を把握し、今後の施策に活かすことを目的としています。</p>
+      </div>
 
-<h3><%= link_to "アンケートフォーム", new_requested_route_path %></h3>
+      <hr class="my-5">
+
+      <div class="text-start">
+        <h2 class="h5">個人情報について</h2>
+        <p>本アンケートでご提供いただいた個人情報は、調査の目的のみに使用し、適切に管理いたします。</p>
+
+        <h2 class="h5 mt-4">アンケート回答方法について</h2>
+        <p>本アンケートは小学校4年生から高等学校3年生を対象としています。</p>
+        <p>最初に、居住地域や対象となるお子さんの人数を登録していただき、それぞれのお子さんについてアンケートに回答していただきます。</p>
+        <p>情報を登録していただくと、回答を保存できます。再開する際はログインしてください。</p>
+      </div>
+
+      <div class="d-grid gap-2 col-md-8 mx-auto mt-5">
+        <% if current_user %>
+          <%= link_to "アンケートトップへ", user_path(current_user), class: "btn btn-success btn-lg" %>
+        <% else %>
+          <%= link_to "アンケートを開始する", new_user_path, class: "btn btn-primary btn-lg" %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

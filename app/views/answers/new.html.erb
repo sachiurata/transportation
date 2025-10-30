@@ -1,0 +1,54 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="h3 mb-3">アンケート回答</h1>
+      <p class="lead">お子さん: <%= @child.school_name %> <%= @child.grade %>年</p>
+      <p class="text-muted"><%= @survey.survey_name %></p>
+
+      <hr>
+
+      <%= form_with url: answers_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :child_id, value: @child.id %>
+
+        <% @questions.each do |question| %>
+          <div class="card mb-4">
+            <div class="card-header">
+              <strong>質問 <%= question.display_order %></strong>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><%= question.text %></p>
+
+              <%# fields_for を使い、質問IDごとにパラメータをグループ化する %>
+              <%= fields_for "answers[#{question.id}]" do |answer_fields| %>
+
+                <%# 質問タイプに応じてフォーム部品を切り替え %>
+                <% if question.multiple_choice? || question.multiple_choice_and_free_text? %>
+                  <div class="mb-3">
+                    <% question.question_options.each do |option| %>
+                      <div class="form-check">
+                        <%= check_box_tag "answers[#{question.id}][question_option_ids][]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
+                        <%= label_tag "option_#{option.id}", option.text, class: "form-check-label" %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <% if question.free_text? || question.multiple_choice_and_free_text? %>
+                  <div class="mb-2">
+                    <%= answer_fields.label :text, "自由記述欄", class: "form-label" %>
+                    <%= answer_fields.text_area :text, rows: 3, class: "form-control" %>
+                  </div>
+                <% end %>
+
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="d-grid">
+          <%= f.submit "この内容で回答を送信する", class: "btn btn-primary btn-lg" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
