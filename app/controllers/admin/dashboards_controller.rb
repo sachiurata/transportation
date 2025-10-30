@@ -3,17 +3,28 @@ class Admin::DashboardsController < Admin::BaseController
   end
 
   def heatmap
-    routes = RequestedRoute.all
+    routes = RequestedRoute.where.not(start_point_location: nil, end_point_location: nil)
 
-    # rgeoの機能により、latitudeを.y  longitudeを.x で値を取得する
     @routes_data = routes.map do |route|
       {
+        id: route.id,
         start_point_name: route.start_point_name,
-        start_lat: route.start_point_location.y,
-        start_lng: route.start_point_location.x,
-        end_lat: route.end_point_location.y,
-        end_lng: route.end_point_location.x,
-        comment: route.comment
+        end_point_name: route.end_point_name,
+        start_point: {
+          lat: route.start_point_location.y,
+          lng: route.start_point_location.x
+        },
+        end_point: {
+          lat: route.end_point_location.y,
+          lng: route.end_point_location.x
+        },
+        requested_times: route.requested_times.map do |time|
+          {
+            day: time.requested_day,
+            time: time.requested_time&.strftime("%H:%M"),
+            type: time.departure_or_arrival
+          }
+        end
       }
     end
   end
