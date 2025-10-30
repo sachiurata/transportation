@@ -29,9 +29,9 @@ production:
     url: <%= ENV["DATABASE_URL"] %>
 
   # SolidQueue用 (primaryと同じDBを指定)
-  solid_queue:
+  queue:
     url: <%= ENV["DATABASE_URL"] %>
 
   # SolidCache用 (primaryと同じDBを指定)
-  solid_cache:
+  cache:
     url: <%= ENV["DATABASE_URL"] %>
