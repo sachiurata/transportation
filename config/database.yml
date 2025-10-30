@@ -20,7 +20,18 @@ test:
   database: transportation_test
 
 production:
-  <<: *default
-  # 本番環境では DATABASE_URL 環境変数を使用するのが一般的です。
-  # これにより、CI環境で不要な環境変数を探してエラーになることを防ぎます。
-  url: <%= ENV["DATABASE_URL"] %>
+  # メインのアプリ用DB
+  primary:
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # SolidCable用 (primaryと同じDBを指定)
+  cable:
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # SolidQueue用 (primaryと同じDBを指定)
+  solid_queue:
+    url: <%= ENV["DATABASE_URL"] %>
+
+  # SolidCache用 (primaryと同じDBを指定)
+  solid_cache:
+    url: <%= ENV["DATABASE_URL"] %>
