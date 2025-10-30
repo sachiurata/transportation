@@ -1,6 +1,6 @@
 <div class="container mt-4"
   data-controller="form-wizard"
-  data-form-wizard-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>"
+  data-form-wizard-api-key-value="<%= Rails.application.credentials.GOOGLE_MAP_API_KEY %>"
   data-form-wizard-initial-start-location-value="<%= @requested_route.start_point_location %>"
   data-form-wizard-initial-end-location-value="<%= @requested_route.end_point_location %>"
 >

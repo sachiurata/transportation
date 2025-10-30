@@ -1,4 +1,4 @@
-<div class="container mt-4" data-controller="form-wizard" data-form-wizard-api-key-value="<%= ENV['GOOGLE_MAP_API_KEY'] %>">
+<div class="container mt-4" data-controller="form-wizard" data-form-wizard-api-key-value="<%= Rails.application.credentials.GOOGLE_MAP_API_KEY %>">
   <h1 class="h3">移動経路の登録</h1>
   <%# @child を @subject に変更 %>
   <p class="lead">お子さん: <%= @subject.school_name %> <%= @subject.grade %>年</p>
