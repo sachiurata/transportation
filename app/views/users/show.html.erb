@@ -40,8 +40,12 @@
                 <% if child.requested_routes.any? %>
                   <%= link_to "移動経路の確認・編集", requested_routes_path(subject_id: child.id, subject_type: 'Child'), class: "btn btn-secondary btn-sm" %>
                 <% end %>
-                <%# 「新規登録」ボタンは常に表示 %>
-                <%= link_to "移動経路の登録", new_requested_route_path(subject_id: child.id, subject_type: 'Child'), class: "btn btn-success btn-sm" %>
+                <%# 「新規登録」ボタンはアンケート回答前は無効化 %>
+                <% if child.answers.any? %>
+                  <%= link_to "移動経路の登録", new_requested_route_path(subject_id: child.id, subject_type: 'Child'), class: "btn btn-success btn-sm" %>
+                <% else %>
+                  <button class="btn btn-secondary btn-sm" disabled>移動経路の登録</button>
+                <% end %>
               </div>
             </li>
           <% end %>
