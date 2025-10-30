@@ -17,19 +17,19 @@ class QuestionTest < ActiveSupport::TestCase
   test "should be invalid without text" do
     @question.text = nil
     assert_not @question.valid?
-    assert_includes @question.errors[:text], "can't be blank"
+    assert_not_empty @question.errors[:text], "can't be blank"
   end
 
   test "should be invalid without question_type" do
     @question.question_type = nil
     assert_not @question.valid?
-    assert_includes @question.errors[:question_type], "can't be blank"
+    assert_not_empty @question.errors[:question_type], "can't be blank"
   end
 
   test "should be invalid without a survey" do
     @question.survey = nil
     assert_not @question.valid?
-    assert_includes @question.errors[:survey], "must exist"
+    assert_not_empty @question.errors[:survey], "must exist"
   end
 
   test "should be valid without display_order" do

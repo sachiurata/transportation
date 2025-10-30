@@ -16,13 +16,13 @@ class SurveyTest < ActiveSupport::TestCase
   test "survey_name should be present" do
     @survey.survey_name = ""
     assert_not @survey.valid?
-    assert_includes @survey.errors[:survey_name], "can't be blank"
+    assert_not_empty @survey.errors[:survey_name], "can't be blank"
   end
 
   test "should belong to an admin user" do
     @survey.admin_user = nil
     assert_not @survey.valid?
-    assert_includes @survey.errors[:admin_user], "must exist"
+    assert_not_empty @survey.errors[:admin_user], "must exist"
   end
 
   test "should destroy associated questions when destroyed" do

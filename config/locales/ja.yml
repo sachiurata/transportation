@@ -6,6 +6,25 @@ ja:
         free_text: "自由記述"
         multiple_choice_and_free_text: "選択式 + 自由記述"
 
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y年%m月%d日(%a) %H時%M分"
+      short: "%m/%d %H:%M"
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y年%m月%d日(%a)"
+      short: "%m/%d"
+    abbr_day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
+
   activerecord:
     # モデルの属性名を日本語に変換するための設定
     attributes:
