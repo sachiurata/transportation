@@ -17,7 +17,7 @@
       class="card mb-4"
       data-controller="map"
       data-map-api-key-value="<%= Rails.application.credentials.GOOGLE_MAP_API_KEY %>"
-      data-map-routes-value='<%= [route_data].to_json %>' <%# データを単一要素の配列として渡す %>
+      data-map-routes-value="<%= [route_data].to_json %>"<%# データを単一要素の配列として渡す %>
       data-map-start-marker-path-value="<%= asset_path('start_marker.svg') %>"
       data-map-end-marker-path-value="<%= asset_path('end_marker.svg') %>"
     >
